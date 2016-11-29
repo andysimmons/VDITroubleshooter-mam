@@ -1,10 +1,11 @@
-﻿<Controls:MetroWindow x:Class="VDITroubleshooter_mam.MainWindow"
+﻿<Controls:MetroWindow xmlns:PlatformUI="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"  x:Class="VDITroubleshooter_mam.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VDITroubleshooter_mam"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
         mc:Ignorable="d"
         Title=" St. Luke's VDI Troubleshooter" Height="500" Width="1000"
         GlowBrush="Gray"        
@@ -33,22 +34,40 @@
 
     </Window.Resources>
 
-    <Grid>
+    <Grid Name="gridMain">
+        <ListBox x:Name="listboxSuggestions" 
+                 HorizontalAlignment="Left" 
+                 Height="Auto" 
+                 VerticalAlignment="Top" 
+                 Width="Auto"
+                 MinWidth="180"
+                 Margin="8,34,0,0" 
+                 Visibility="Collapsed" 
+                 KeyDown="listboxSuggestions_KeyDown"  
+                 SelectionChanged="listboxSuggestions_SelectionChanged" 
+                 Panel.ZIndex="1"
+                 BorderBrush="Gray"
+                 BorderThickness="1" MouseDoubleClick="listboxSuggestions_MouseDoubleClick" />
+        
         <StackPanel Margin="4">
-            <Grid>
+            <Grid Name="gridSearch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal"
                             Grid.Column="0">
-                    <TextBox Name="textboxUsername"
+                    <Grid>
+                        <StackPanel>
+                            <TextBox x:Name="textboxUserSearch"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.Watermark="User Search"
                              Margin="4"
                              Height="24"
-                             Width="180" 
-                             TextChanged="textboxUsername_TextChanged" />
+                             Width="180"
+                             PreviewKeyDown="textboxUserSearch_KeyDown" />
+                        </StackPanel>
+                        </Grid>
                 </StackPanel>
                 <StackPanel Grid.Column="1"
                             VerticalAlignment="Center"
@@ -63,11 +82,11 @@
                 <TextBlock Name="textblockResult"
                            Margin="4"></TextBlock>
             </StackPanel>
-            <Grid>
+            <Grid Name="gridResults">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
@@ -76,38 +95,32 @@
                 </Grid.RowDefinitions>
 
                 <!-- AD Account Status -->
-                <StackPanel Name="stackpanelADAccountStatus"
-                            Grid.Column="0">
-                    <GroupBox Name="groupboxADAccountStatus"
-                              Header="AD Account Management">
-                        <TextBlock>some ad stuff here</TextBlock>
-                    </GroupBox>
-                </StackPanel>
+                <GroupBox Name="groupboxADAccountStatus"
+                          Header="AD Account Management"
+                          Grid.Column="0">
+                    <TextBlock>some ad stuff here</TextBlock>
+                </GroupBox>
                 
                 <!-- Sessions -->
-                <StackPanel Name="stackpanelSessionManagement"
-                            Grid.Column="1">
-                    <GroupBox Name="groupboxSessionManagement"
-                              Header="Session Management">
-                        <StackPanel>
-                            <TextBlock>some session data here</TextBlock>
-                        </StackPanel>
-                    </GroupBox>
-                </StackPanel>
-
+                <GroupBox Name="groupboxSessionManagement"
+                          Header="Session Management"
+                          Grid.Column="1">
+                    <StackPanel>
+                        <TextBlock>some session data here</TextBlock>
+                    </StackPanel>
+                </GroupBox>
+                
                 <!-- Devices -->
-                <StackPanel Name="stackpanelUserDevices"
+                <GroupBox Name="groupboxUserDevices"
+                            Header="User Devices"
                             Grid.Column="2">
-                    <GroupBox Name="groupboxUserDevices"
-                              Header="User Devices">
-                        <StackPanel>
-                            <TextBlock>Device Management</TextBlock>
-                            <TextBlock>test</TextBlock>
-                        </StackPanel>
+                    <StackPanel>
+                        <TextBlock>Device Management</TextBlock>
+                        <TextBlock>test</TextBlock>
+                    </StackPanel>
 
                         
-                    </GroupBox>
-                </StackPanel>
+                </GroupBox>
                 <GroupBox Name="groupboxConnectionLog"
                           Header="Recent Connection Attempts"
                           Grid.ColumnSpan="3"

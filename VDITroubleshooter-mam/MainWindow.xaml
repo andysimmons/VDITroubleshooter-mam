@@ -1,140 +1,235 @@
-﻿<Controls:MetroWindow xmlns:PlatformUI="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"  x:Class="VDITroubleshooter_mam.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:VDITroubleshooter_mam"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
-        mc:Ignorable="d"
-        Title=" St. Luke's VDI Troubleshooter" Height="500" Width="1000"
-        GlowBrush="Gray"        
-        ResizeMode="CanResizeWithGrip"
-        TitleCaps="False" 
-        ShowIconOnTitleBar="False" 
-        Icon="citrix-icon.ico">
+﻿<Controls:MetroWindow xmlns:PlatformUI="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"  
+                      x:Class="VDITroubleshooter.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:local="clr-namespace:VDITroubleshooter"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      mc:Ignorable="d"
+                      Title=" St. Luke's VDI Troubleshooter" 
+                      Width="1000"
+                      Height="500" 
+                      BorderBrush="Black"
+                      ResizeMode="CanResizeWithGrip"
+                      TitleCaps="False" 
+                      ShowIconOnTitleBar="False" 
+                      Icon="citrix-icon.ico">
     <Window.Resources>
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
                 
                 <!-- Accents:
-                “Red”, “Green”, “Blue”, “Purple”, “Orange”, “Lime”, “Emerald”, “Teal”, “Cyan”, “Cobalt”, “Indigo”, 
-                “Violet”, “Pink”, “Magenta”, “Crimson”, “Amber”, “Yellow”, “Brown”, “Olive”, “Steel”, “Mauve”, 
-                “Taupe”, “Sienna” -->
-                
+                    “Red”, “Green”, “Blue”, “Purple”, “Orange”, “Lime”, “Emerald”, “Teal”, “Cyan”, “Cobalt”, 
+                    “Indigo”, “Violet”, “Pink”, “Magenta”, “Crimson”, “Amber”, “Yellow”, “Brown”, “Olive”, 
+                    “Steel”, “Mauve”, “Taupe”, “Sienna”
+                -->
+
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-                
-                <!-- BaseLight/BaseDark -->
-                
+
+                <!-- Accents: 
+                    "BaseLight", "BaseDark" 
+                -->
+
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
+
     </Window.Resources>
 
-    <Grid Name="gridMain">
+    <Grid Name="gridWindow" 
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+        <Grid.Resources>
+            <Style x:Key="PropertyName"  TargetType="{x:Type Label}">
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Grid.Column" Value="0" />
+            </Style>
+            <Style x:Key="PropertyValue"  TargetType="{x:Type Label}">
+                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="Grid.Column" Value="1" />
+            </Style>
+        </Grid.Resources>
+
+        <!--<StackPanel Margin="4,4,0,4" HorizontalAlignment="Left" Width="984">-->
         <ListBox x:Name="listboxSuggestions" 
-                 HorizontalAlignment="Left" 
-                 Height="Auto" 
-                 VerticalAlignment="Top" 
-                 Width="Auto"
-                 MinWidth="180"
-                 Margin="8,34,0,0" 
-                 Visibility="Collapsed" 
-                 KeyDown="listboxSuggestions_KeyDown"  
-                 SelectionChanged="listboxSuggestions_SelectionChanged" 
-                 Panel.ZIndex="1"
-                 BorderBrush="Gray"
-                 BorderThickness="1" MouseDoubleClick="listboxSuggestions_MouseDoubleClick" />
-        
-        <StackPanel Margin="4">
-            <Grid Name="gridSearch">
+                HorizontalAlignment="Left" 
+                Height="Auto" 
+                VerticalAlignment="Top" 
+                Width="Auto"
+                MinWidth="180"
+                Margin="8,34,0,0" 
+                Visibility="Collapsed" 
+                KeyDown="listboxSuggestions_KeyDown"  
+                SelectionChanged="listboxSuggestions_SelectionChanged" 
+                Panel.ZIndex="1"
+                BorderBrush="Gray"
+                BorderThickness="1" MouseDoubleClick="listboxSuggestions_MouseDoubleClick" LostFocus="listboxSuggestions_LostFocus" />
+
+        <Grid Name="gridMain">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Name="gridSearch" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal"
-                            Grid.Column="0">
-                    <Grid>
-                        <StackPanel>
                             <TextBox x:Name="textboxUserSearch"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.Watermark="User Search"
                              Margin="4"
                              Height="24"
                              Width="180"
-                             PreviewKeyDown="textboxUserSearch_KeyDown" />
-                        </StackPanel>
-                        </Grid>
-                </StackPanel>
-                <StackPanel Grid.Column="1"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Right">
+                             PreviewKeyDown="textboxUserSearch_KeyDown"
+                             Grid.Column="0"/>
+
                     <Button Name="buttonRefresh"
-                            Margin="4">
+                            Margin="4"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Grid.Column="1">
                         Refresh
                     </Button>
-                </StackPanel>
             </Grid>
-            <StackPanel>
-                <TextBlock Name="textblockResult"
-                           Margin="4"></TextBlock>
-            </StackPanel>
-            <Grid Name="gridResults">
+            <Grid Name="gridResult" Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
                 <!-- AD Account Status -->
                 <GroupBox Name="groupboxADAccountStatus"
                           Header="AD Account Management"
                           Grid.Column="0">
-                    <TextBlock>some ad stuff here</TextBlock>
+                    <Grid Name="gridADAccountStatus">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Name="property" />
+                            <ColumnDefinition Name="value" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Name="name" />
+                            <RowDefinition Name="upn" />
+                            <RowDefinition Name="isAccountEnabled" />
+                            <RowDefinition Name="isPasswordExpired" />
+                            <RowDefinition Name="isLockedOut" />
+                            <RowDefinition Name="accountExpirationDate" />
+                            <RowDefinition Name="passwordLastSet" />
+                            <RowDefinition Name="lastBadPasswordAttempt" />
+                            <RowDefinition Name="lastGoodPasswordAttempt" />
+                            <RowDefinition Name="preferredCitrixSite" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Column 0 -->
+                        <Label Name="labelName"
+                               Style="{StaticResource PropertyName}"
+                               Grid.Row="0">Name</Label>
+                        <Label Name="labelUpn" 
+                               Style="{StaticResource PropertyName}"
+                               Grid.Row="1">UPN</Label>
+                        <Label Name="labelIsAccountExpired" 
+                               Style="{StaticResource PropertyName}"
+                               Grid.Row="2">Account Enabled?</Label>
+                        <Label Name="labelIsPasswordExpired" 
+                               Style="{StaticResource PropertyName}"
+                               Grid.Row="3">Password Expired?</Label>
+                        <Label Name="labelIsLockedOut" 
+                               Style="{StaticResource PropertyName}"
+                               Grid.Row="4">Locked Out?</Label>
+                        <Label Name="labelAccountExpirationDate" 
+                               Style="{StaticResource PropertyName}"
+                               Grid.Row="5">Account Expiration Date</Label>
+                        <Label Name="labelPasswordLastSet"
+                               Style="{StaticResource PropertyName}"
+                               Grid.Row="6">Password Last Set</Label>
+                        <Label Name="labelLastBadPasswordAttempt"
+                               Style="{StaticResource PropertyName}"
+                               Grid.Row="7">Last Bad Password Attempt</Label>
+                        <Label Name="labelGoodBadPasswordAttempt"
+                               Style="{StaticResource PropertyName}"
+                               Grid.Row="8">Last Good Password Attempt</Label>
+                        <Label Name="labelPreferredCitrixSite"
+                               Style="{StaticResource PropertyName}"
+                               Grid.Row="9">Preferred Citrix Site</Label>
+
+                        <!-- Column 1 -->
+                        <Label Name="labelNameResult"
+                               Style="{StaticResource PropertyValue}"
+                               Grid.Row="0">Name Result</Label>
+                        <Label Name="labelUpnResult" 
+                               Style="{StaticResource PropertyValue}"
+                               Grid.Row="1">UPN Result</Label>
+                        <Label Name="labelIsAccountExpiredResult" 
+                               Style="{StaticResource PropertyValue}"
+                               Grid.Row="2">Account Enabled Result</Label>
+                        <Label Name="labelIsPasswordExpiredResult" 
+                               Style="{StaticResource PropertyValue}"
+                               Grid.Row="3">Password Expired Result</Label>
+                        <Label Name="labelIsLockedOutResult" 
+                               Style="{StaticResource PropertyValue}"
+                               Grid.Row="4">Locked Out Result</Label>
+                        <Label Name="labelAccountExpirationDateResult" 
+                               Style="{StaticResource PropertyValue}"
+                               Grid.Row="5">Account Expiration Date Result</Label>
+                        <Label Name="labelPasswordLastSetResult"
+                               Style="{StaticResource PropertyValue}"
+                               Grid.Row="6">Password Last Set Result</Label>
+                        <Label Name="labelLastBadPasswordAttemptResult"
+                               Style="{StaticResource PropertyValue}"
+                               Grid.Row="7">Last Bad Password Attempt Result</Label>
+                        <Label Name="labelGoodBadPasswordAttemptResult"
+                               Style="{StaticResource PropertyValue}"
+                               Grid.Row="8">Last Good Password Attempt Result</Label>
+                        <Label Name="labelPreferredCitrixSiteResult"
+                               Style="{StaticResource PropertyValue}"
+                               Grid.Row="9">Preferred Citrix Site Result</Label>
+
+                    </Grid>
                 </GroupBox>
-                
+
                 <!-- Sessions -->
                 <GroupBox Name="groupboxSessionManagement"
                           Header="Session Management"
                           Grid.Column="1">
-                    <StackPanel>
-                        <TextBlock>some session data here</TextBlock>
+                    <StackPanel Name="stackpanelSessions">
+                        <Grid Name="gridSessionPicker">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Name="labelUsersDesktops" />
+                        </Grid>
                     </StackPanel>
                 </GroupBox>
-                
+
                 <!-- Devices -->
                 <GroupBox Name="groupboxUserDevices"
                             Header="User Devices"
                             Grid.Column="2">
-                    <StackPanel>
-                        <TextBlock>Device Management</TextBlock>
-                        <TextBlock>test</TextBlock>
-                    </StackPanel>
-
-                        
                 </GroupBox>
-                <GroupBox Name="groupboxConnectionLog"
+            </Grid>
+            <GroupBox Name="groupboxConnectionLog"
                           Header="Recent Connection Attempts"
                           Grid.ColumnSpan="3"
-                          Grid.Row="1">
-                    <DataGrid Name="datagridConnectionLog">
-                        <DataGridTextColumn Header="Some Text Column" />
-                        <DataGridTextColumn Header="Some Other Text Column" />
-                        <DataGridCheckBoxColumn Header="Some Bool Column"  />
-                    </DataGrid>
-                </GroupBox>    
-            </Grid>
-        </StackPanel>
-        <DockPanel VerticalAlignment="Bottom">
-            <StatusBar DockPanel.Dock="Bottom" Height="24">
+                          Grid.Row="2">
+                <DataGrid Name="datagridConnectionLog">
+                    <DataGridTextColumn Header="Some Text Column" />
+                    <DataGridTextColumn Header="Some Other Text Column" />
+                    <DataGridCheckBoxColumn Header="Some Bool Column"  />
+                </DataGrid>
+            </GroupBox>
+           <StatusBar Grid.Row="3" Height="24">
                 <StatusBarItem Padding="4">
                     <TextBlock>Some Status Item</TextBlock>
                 </StatusBarItem>
@@ -143,6 +238,6 @@
                     Some other item
                 </StatusBarItem>
             </StatusBar>
-        </DockPanel>
+        </Grid>
     </Grid>
 </Controls:MetroWindow>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VDITroubleshooter_mam.Properties
+namespace VDITroubleshooter.Properties
 {
 
 

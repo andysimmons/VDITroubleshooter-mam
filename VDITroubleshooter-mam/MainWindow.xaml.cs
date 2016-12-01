@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace VDITroubleshooter_mam
+namespace VDITroubleshooter
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -20,80 +20,75 @@ namespace VDITroubleshooter_mam
         }
 
         /// <summary>
+        ///     Searches AD for an explicit username and returns the result.
+        /// </summary>
+        /// <param name="samAccountName">Active Directory username</param>
+        protected SearchResult GetADUser(string samAccountName)
+        {
+            var search = new DirectorySearcher("(samAccountName=" + samAccountName + ")");
+            search.Asynchronous = false;
+            return search?.FindOne();
+        }
+
+
+        /// <summary>
         ///     Search AD for possible user matches.
         /// </summary>
         /// <param name="AmbiguousName">Search string</param>
         /// <param name="MaxResults">Max results</param>
         /// <returns>
-        ///     Returns a list of potential AD user matches.
+        ///     Returns a list of potential AD user matches as strings.
         /// </returns>
         private static List<string> GetUserSuggestions(string AmbiguousName, int MaxResults)
         {
             var suggestions = new List<string>();
-            suggestions.Clear();
 
             var search = new DirectorySearcher("(anr=" + AmbiguousName + ")");
+            search.PropertiesToLoad.Add("samAccountName");
+            search.PropertiesToLoad.Add("cn");
+            search.PropertiesToLoad.Add("department");
+            search.PropertiesToLoad.Add("title");
             search.SizeLimit = MaxResults;
             search.Asynchronous = true;
 
             foreach (SearchResult result in search?.FindAll())
             {
-                string item = result.Properties["samAccountName"][0] + " (" + result.Properties["cn"][0] + ")";
-                suggestions.Add(item);
+                string samAccountName = result.Properties["samAccountName"][0].ToString();
+                string cn = result.Properties["cn"][0].ToString();
+
+                try
+                {
+                    string title = result.Properties["title"]?[0]?.ToString();
+                    string department = result.Properties["department"]?[0]?.ToString();
+
+                    suggestions.Add($"{samAccountName} ({cn}  ::  {title}  ::  {department}) ");
+                }
+
+                catch
+                {
+                    suggestions.Add($"{samAccountName} ({cn}) ");
+                }
             }
 
             return suggestions;
         }
 
 
-
-        void textboxUserSearch_TextChanged(object sender, TextChangedEventArgs e)
+        /// <summary>
+        ///     Displays the auto-complete dropdown under the user search textbox.
+        /// </summary>
+        /// <param name="Suggestions">List of suggested matches.</param>
+        private void ShowUserSuggestions(List<string> Suggestions)
         {
-            string partialUserName = textboxUserSearch.Text;
-            var autoList = new List<string>();
-
-            if (partialUserName.Length >= 3)
+            if (Suggestions.Count > 0)
             {
-                autoList = GetUserSuggestions(partialUserName, 5);
-            }
-
-            if (autoList.Count > 0)
-            {
-                listboxSuggestions.ItemsSource = autoList;
+                listboxSuggestions.ItemsSource = Suggestions;
                 listboxSuggestions.Visibility = Visibility.Visible;
-            }
-            // TODO Delete this?
-            else if (textboxUserSearch.Text.Equals(""))
-            {
-                listboxSuggestions.Visibility = Visibility.Collapsed;
-                listboxSuggestions.ItemsSource = null;
             }
             else
             {
-                listboxSuggestions.Visibility = Visibility.Collapsed;
-                listboxSuggestions.ItemsSource = null;
+                HideUserSuggestions();
             }
-        }
-
-        void listboxSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (listboxSuggestions.ItemsSource != null)
-            {
-                listboxSuggestions.KeyDown += listboxSuggestions_KeyDown;
-            }
-        }
-
-        private void textboxUserSearch_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Down)
-            {
-                listboxSuggestions.Focus();
-            }
-            else if (e.Key == Key.Enter)
-            {
-
-            }
-
         }
 
         /// <summary>
@@ -103,34 +98,93 @@ namespace VDITroubleshooter_mam
         {
             if (listboxSuggestions.SelectedItem != null)
             {
+                // set the search text to just the SAM account name from the suggestion string
                 textboxUserSearch.Text = listboxSuggestions.SelectedItem.ToString().Split()[0];
             }
 
-            CloseAutoCompleteBox();
+            HideUserSuggestions();
         }
 
         /// <summary>
         ///     Close the auto-complete box (without changing search text).
         /// </summary>
-        private void CloseAutoCompleteBox()
+        private void HideUserSuggestions()
         {
             listboxSuggestions.Visibility = Visibility.Collapsed;
+            listboxSuggestions.ItemsSource = null;
             textboxUserSearch.Focus();
         }
 
         private void GetUserData()
         {
+            // TODO
+        }
 
+        /// <summary>
+        ///     Updates form controls that display search result details
+        /// </summary>
+        /// <param name="Username">SAM account name of the AD user.</param>
+        private void UpdateResultControls(SearchResult Username)
+        {
+            // TODO
+        }
+
+        /// <summary>
+        ///     Clears form controls that display search result details
+        /// </summary>
+        private void ClearResultControls()
+        {
+            // TODO
+        }
+
+
+        private void textboxUserSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string partialUserName = textboxUserSearch.Text;
+
+            // Try ambigious name resolution if we have at least 3 letters to search on
+            if (partialUserName.Length >= 3)
+            {
+                List<string> anrHits = GetUserSuggestions(partialUserName, 8);
+
+                ShowUserSuggestions(anrHits);                
+            }
+
+            else
+            {
+                HideUserSuggestions();
+            }
+        }
+
+        private void textboxUserSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.Key == Key.Down))
+            {
+                listboxSuggestions.Focus();
+            }
+            else if (e.Key == Key.Enter)
+            {
+                HideUserSuggestions();
+            }
+        }
+
+        private void listboxSuggestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listboxSuggestions.ItemsSource != null)
+            {
+                listboxSuggestions.KeyDown += listboxSuggestions_KeyDown;
+            }
         }
 
         private void listboxSuggestions_KeyDown(object sender, KeyEventArgs e)
         {
             if (ReferenceEquals(sender, listboxSuggestions))
             {
+
                 if (e.Key == Key.Enter)
                 {
-                    textboxUserSearch.Text = listboxSuggestions.SelectedItem.ToString().Split()[0];
-                    listboxSuggestions.Visibility = Visibility.Collapsed;
+                    e.Handled = true;
+                    AcceptSuggestion();
                 }
 
                 if (e.Key == Key.Down)
@@ -143,43 +197,15 @@ namespace VDITroubleshooter_mam
                     e.Handled = true;
                     listboxSuggestions.Items.MoveCurrentToPrevious();
                 }
-            }
-        }
 
-        // Explicitly searches AD for a given username and returns the object
-        private SearchResult GetADUser(string samAccountName)
-        {
-            try
-            {
-                var search = new DirectorySearcher("(samAccountName=" + samAccountName + ")");
-                search.Asynchronous = false;
-                SearchResult result = search.FindOne();
-                if (result != null)
+                if (e.Key == Key.Escape)
                 {
-                    return result;
-                }
-                else
-                {
-                    return null;
+                    e.Handled = true;
+                    HideUserSuggestions();
                 }
             }
-            catch
-            {
-                return null;
-            }
         }
 
-        // Updates form controls that display search result details
-        private void UpdateResultControls(SearchResult user)
-        {
-
-        }
-
-        // Clears form controls that display search result details
-        private void ClearResultControls()
-        {
-
-        }
 
         private void listboxSuggestions_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -187,6 +213,21 @@ namespace VDITroubleshooter_mam
             {
                 textboxUserSearch.Text = listboxSuggestions.SelectedItem.ToString().Split()[0];
                 listboxSuggestions.Visibility = Visibility.Collapsed;
+            }
+        }
+
+
+        private void listboxSuggestions_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+            
+            if (ReferenceEquals(sender, listboxSuggestions))
+            {
+
+            }
+            else
+            {
+                HideUserSuggestions();
             }
         }
     }

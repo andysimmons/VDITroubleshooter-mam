@@ -14,14 +14,14 @@
                       ResizeMode="CanResizeWithGrip"
                       TitleCaps="False" 
                       ShowIconOnTitleBar="False" 
-                      Icon="citrix-icon.ico">
+                      Icon="citrix-icon.ico"
+                      Controls:ButtonHelper.PreserveTextCase="True">
     <Window.Resources>
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
-
                 <!-- Accents:
                     “Red”, “Green”, “Blue”, “Purple”, “Orange”, “Lime”, “Emerald”, “Teal”, “Cyan”, “Cobalt”, 
                     “Indigo”, “Violet”, “Pink”, “Magenta”, “Crimson”, “Amber”, “Yellow”, “Brown”, “Olive”, 
@@ -56,6 +56,12 @@
                 <Setter Property="HorizontalAlignment" Value="Left" />
                 <Setter Property="Grid.Column" Value="1" />
             </Style>
+            <!--<Style TargetType="{x:Type Button}">
+                <Setter Property="FontSize" Value="12px" />
+                <Setter Property="FontWeight" Value="Regular" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Padding" Value="6" />
+            </Style>-->
         </Grid.Resources>
 
         <!--<StackPanel Margin="4,4,0,4" HorizontalAlignment="Left" Width="984">-->
@@ -103,150 +109,177 @@
                              Grid.Column="0"/>
 
                 <Button Name="buttonRefresh"
-                            Margin="4"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Right"
-                            Grid.Column="1">
+                        Margin="4"
+                        Width="70"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Grid.Column="1">
                     Refresh
                 </Button>
             </Grid>
             <Grid Name="gridResult" Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="400" />
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition MinWidth="300" 
+                                      Width="*"/>
                 </Grid.ColumnDefinitions>
                 <!-- AD Account Status -->
-                <GroupBox Name="groupboxADAccountStatus"
-                          Header="AD Account Management"
-                          Grid.Column="0">
-                    <Grid Name="gridADAccountStatus">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Name="property" />
-                            <ColumnDefinition Name="value" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Name="name" />
-                            <RowDefinition Name="upn" />
-                            <RowDefinition Name="isAccountEnabled" />
-                            <RowDefinition Name="isPasswordExpired" />
-                            <RowDefinition Name="isLockedOut" />
-                            <RowDefinition Name="accountExpirationDate" />
-                            <RowDefinition Name="passwordLastSet" />
-                            <RowDefinition Name="lastBadPasswordAttempt" />
-                            <RowDefinition Name="lastGoodPasswordAttempt" />
-                            <RowDefinition Name="preferredCitrixSite" />
-                        </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0">
+                    <GroupBox Name="groupboxADAccountStatus"
+                          Header="AD Account Status">
+                        <Grid Name="gridADAccountStatus">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Name="property" />
+                                <ColumnDefinition Name="value" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Name="name" />
+                                <RowDefinition Name="upn" />
+                                <RowDefinition Name="isAccountEnabled" />
+                                <RowDefinition Name="isPasswordExpired" />
+                                <RowDefinition Name="isLockedOut" />
+                                <RowDefinition Name="accountExpirationDate" />
+                                <RowDefinition Name="passwordLastSet" />
+                                <RowDefinition Name="lastBadPasswordAttempt" />
+                                <RowDefinition Name="lastGoodPasswordAttempt" />
+                                <RowDefinition Name="preferredCitrixSite" />
+                            </Grid.RowDefinitions>
 
-                        <!-- Column 0 -->
-                        <Label Name="labelName"
+                            <!-- Column 0 -->
+                            <Label Name="labelName"
                                Style="{StaticResource PropertyName}"
                                Grid.Row="0">Name</Label>
-                        <Label Name="labelUpn" 
+                            <Label Name="labelUpn" 
                                Style="{StaticResource PropertyName}"
                                Grid.Row="1">UPN</Label>
-                        <Label Name="labelIsAccountExpired" 
+                            <Label Name="labelIsAccountExpired" 
                                Style="{StaticResource PropertyName}"
                                Grid.Row="2">Account Enabled?</Label>
-                        <Label Name="labelIsPasswordExpired" 
+                            <Label Name="labelIsPasswordExpired" 
                                Style="{StaticResource PropertyName}"
                                Grid.Row="3">Password Expired?</Label>
-                        <Label Name="labelIsLockedOut" 
+                            <Label Name="labelIsLockedOut" 
                                Style="{StaticResource PropertyName}"
                                Grid.Row="4">Locked Out?</Label>
-                        <Label Name="labelAccountExpirationDate" 
+                            <Label Name="labelAccountExpirationDate" 
                                Style="{StaticResource PropertyName}"
                                Grid.Row="5">Account Expiration Date</Label>
-                        <Label Name="labelPasswordLastSet"
+                            <Label Name="labelPasswordLastSet"
                                Style="{StaticResource PropertyName}"
                                Grid.Row="6">Password Last Set</Label>
-                        <Label Name="labelLastBadPasswordAttempt"
+                            <Label Name="labelLastBadPasswordAttempt"
                                Style="{StaticResource PropertyName}"
                                Grid.Row="7">Last Bad Password Attempt</Label>
-                        <Label Name="labelGoodBadPasswordAttempt"
+                            <Label Name="labelGoodBadPasswordAttempt"
                                Style="{StaticResource PropertyName}"
                                Grid.Row="8">Last Good Password Attempt</Label>
-                        <Label Name="labelPreferredCitrixSite"
+                            <Label Name="labelPreferredCitrixSite"
                                Style="{StaticResource PropertyName}"
                                Grid.Row="9">Preferred Citrix Site</Label>
 
-                        <!-- Column 1 -->
-                        <Label Name="labelNameResult"
+                            <!-- Column 1 -->
+                            <Label Name="labelNameResult"
                                Style="{StaticResource PropertyValue}"
                                Grid.Row="0">Name Result</Label>
-                        <Label Name="labelUpnResult" 
+                            <Label Name="labelUpnResult" 
                                Style="{StaticResource PropertyValue}"
                                Grid.Row="1">UPN Result</Label>
-                        <Label Name="labelIsAccountExpiredResult" 
+                            <Label Name="labelIsAccountExpiredResult" 
                                Style="{StaticResource PropertyValue}"
                                Grid.Row="2">Account Enabled Result</Label>
-                        <Label Name="labelIsPasswordExpiredResult" 
+                            <Label Name="labelIsPasswordExpiredResult" 
                                Style="{StaticResource PropertyValue}"
                                Grid.Row="3">Password Expired Result</Label>
-                        <Label Name="labelIsLockedOutResult" 
+                            <Label Name="labelIsLockedOutResult" 
                                Style="{StaticResource PropertyValue}"
                                Grid.Row="4">Locked Out Result</Label>
-                        <Label Name="labelAccountExpirationDateResult" 
+                            <Label Name="labelAccountExpirationDateResult" 
                                Style="{StaticResource PropertyValue}"
                                Grid.Row="5">Account Expiration Date Result</Label>
-                        <Label Name="labelPasswordLastSetResult"
+                            <Label Name="labelPasswordLastSetResult"
                                Style="{StaticResource PropertyValue}"
                                Grid.Row="6">Password Last Set Result</Label>
-                        <Label Name="labelLastBadPasswordAttemptResult"
+                            <Label Name="labelLastBadPasswordAttemptResult"
                                Style="{StaticResource PropertyValue}"
                                Grid.Row="7">Last Bad Password Attempt Result</Label>
-                        <Label Name="labelGoodBadPasswordAttemptResult"
+                            <Label Name="labelGoodBadPasswordAttemptResult"
                                Style="{StaticResource PropertyValue}"
                                Grid.Row="8">Last Good Password Attempt Result</Label>
-                        <Label Name="labelPreferredCitrixSiteResult"
+                            <Label Name="labelPreferredCitrixSiteResult"
                                Style="{StaticResource PropertyValue}"
                                Grid.Row="9">Preferred Citrix Site Result</Label>
 
-                    </Grid>
-                </GroupBox>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Name="groupboxUserAccountManagement"
+                              Header="User Account Management">
+                        <Grid Name="gridUserAccountManagement">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Name="buttonResetPassword"
+                                    Content="Reset Password"
+                                    Grid.Column="0"
+                                    Margin="0,0,2,0"
+                                    FontSize="12px"/>
+                            <Button Name="buttonActivateGracePeriod"
+                                    Content="Activate Grace Period"
+                                    Grid.Column="1"
+                                    Margin="2,0,2,0"/>
+                            <Button Name="buttonUnlockAccount"
+                                    Content="Unlock Account"
+                                    Grid.Column="2"
+                                    Margin="2,0,0,0"/>
+                        </Grid>
+                    </GroupBox>
+                </StackPanel>
+
                 <GroupBox x:Name="groupboxSessionManagement"
                           Header="Session Management"
                           Grid.Column="1"
                           >
-                    
+
                     <StackPanel x:Name="stackpanelSessions">
-                        <Border BorderBrush="{DynamicResource AccentColorBrush}"
-                                BorderThickness="0">
-                            <Grid x:Name="gridSessionPicker" 
+                        <Grid x:Name="gridSessionPicker" 
                                   Height="80">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Name="stackpanelUsersSessions"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Name="stackpanelUsersSessions"
                                         Grid.Column="0">
-                                    <Label Name="labelUsersSessions">User's Sessions</Label>
-                                    <ListView Name="listviewUsersDesktops"
+                                <Label Name="labelUsersSessions">User's Sessions</Label>
+                                <ListView Name="listviewUsersDesktops"
                                               BorderThickness="1"
-                                              BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
                                               Height="54"
                                               SelectionChanged="listviewUsersDesktops_SelectionChanged"
-                                              Margin="0,0,2,0">
-                                        <ListViewItem>SomeActiveVM</ListViewItem>
-                                        <ListViewItem>SomeOtherActiveVM</ListViewItem>
-                                    </ListView>
+                                              Margin="0,0,2,0" 
+                                          BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
+                                    <ListViewItem>SomeActiveVM</ListViewItem>
+                                    <ListViewItem>SomeOtherActiveVM</ListViewItem>
+                                </ListView>
 
-                                </StackPanel>
-                                <StackPanel Name="stackpanelUsersOtherVMs"
+                            </StackPanel>
+                            <StackPanel Name="stackpanelUsersOtherVMs"
                                         Grid.Column="1">
-                                    <Label Name="lableUsersOtherVMs">User's Other VMs</Label>
-                                    <ListView Name="listviewUsersOtherVMs" 
+                                <Label Name="lableUsersOtherVMs">User's Other VMs</Label>
+                                <ListView Name="listviewUsersOtherVMs" 
                                               BorderThickness="1"
                                               BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
                                               Height="54"
                                               SelectionChanged="listviewUsersOtherVMs_SelectionChanged"
                                               Margin="2,0,0,0">
-                                        <ListViewItem>SomeOtherVM</ListViewItem>
-                                    </ListView>
+                                    <ListViewItem>SomeOtherVM</ListViewItem>
+                                </ListView>
 
-                                </StackPanel>
-                            </Grid>
-                        </Border>
+                            </StackPanel>
+
+                        </Grid>
+
+
                         <Grid Name="gridSessionDetails">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -329,7 +362,6 @@
                                    Style="{StaticResource PropertyValue}"
                                    Grid.Row="9">Hung Result</Label>
                         </Grid>
-
                     </StackPanel>
                 </GroupBox>
 

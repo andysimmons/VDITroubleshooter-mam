@@ -27,7 +27,7 @@ namespace VDITroubleshooter
         /// <param name="samAccountName">Active Directory username</param>
         protected SearchResult GetADUser(string samAccountName)
         {
-            var search = new DirectorySearcher("(samAccountName=" + samAccountName + ")");
+            var search = new DirectorySearcher($"(samAccountName={samAccountName})");
             search.Asynchronous = false;
             return search?.FindOne();
         }
@@ -45,12 +45,13 @@ namespace VDITroubleshooter
         {
             var suggestions = new List<string>();
 
-            var search = new DirectorySearcher("(anr=" + AmbiguousName + ")");
+            var search = new DirectorySearcher($"(&(anr={AmbiguousName})(ObjectCategory=Person))");
             search.PropertiesToLoad.Add("samAccountName");
             search.PropertiesToLoad.Add("cn");
             search.PropertiesToLoad.Add("department");
             search.PropertiesToLoad.Add("title");
             search.SizeLimit = MaxResults;
+            search.ClientTimeout = System.TimeSpan.FromSeconds(1);
             search.Asynchronous = true;
 
             try
@@ -110,7 +111,7 @@ namespace VDITroubleshooter
             if (listboxSuggestions.SelectedItem != null)
             {
                 // set the search text to just the SAM account name from the suggestion string
-                textboxUserSearch.Text = listboxSuggestions.SelectedItem.ToString().Split()[0];
+                textboxUserSearch.Text = listboxSuggestions.SelectedItem.ToString().Split()[0].ToLowerInvariant();
             }
 
             HideUserSuggestions();
@@ -123,8 +124,12 @@ namespace VDITroubleshooter
         {
             listboxSuggestions.Visibility = Visibility.Collapsed;
             listboxSuggestions.ItemsSource = null;
-            textboxUserSearch.Focus();
-            textboxUserSearch.CaretIndex = textboxUserSearch.Text.Length;
+
+            if (!textboxUserSearch.IsFocused)
+            {
+                textboxUserSearch.Focus();
+                textboxUserSearch.CaretIndex = textboxUserSearch.Text.Length;
+            }
         }
 
         private void GetUserData()
@@ -199,7 +204,6 @@ namespace VDITroubleshooter
         {
             if (ReferenceEquals(sender, listboxSuggestions))
             {
-
                 if (e.Key == Key.Enter)
                 {
                     e.Handled = true;

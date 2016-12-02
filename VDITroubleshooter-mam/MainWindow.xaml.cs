@@ -17,6 +17,8 @@ namespace VDITroubleshooter
             InitializeComponent();
 
             textboxUserSearch.TextChanged += textboxUserSearch_TextChanged;
+
+            PreviewKeyDown += new KeyEventHandler(HandleEsc);
         }
 
         /// <summary>
@@ -51,28 +53,37 @@ namespace VDITroubleshooter
             search.SizeLimit = MaxResults;
             search.Asynchronous = true;
 
-            foreach (SearchResult result in search?.FindAll())
+            try
             {
-                string samAccountName = result.Properties["samAccountName"][0].ToString();
-                string cn = result.Properties["cn"][0].ToString();
-
-                try
+                foreach (SearchResult result in search?.FindAll())
                 {
-                    string title = result.Properties["title"]?[0]?.ToString();
-                    string department = result.Properties["department"]?[0]?.ToString();
+                    string samAccountName = result.Properties["samAccountName"][0].ToString();
+                    string cn = result.Properties["cn"][0].ToString();
 
-                    suggestions.Add($"{samAccountName} ({cn}  ::  {title}  ::  {department}) ");
-                }
+                    try
+                    {
+                        string title = result.Properties["title"]?[0]?.ToString();
+                        string department = result.Properties["department"]?[0]?.ToString();
+                                                
+                        suggestions.Add($"{samAccountName} ({cn}  ::  {title}  ::  {department}) ");
+                    }
 
-                catch
-                {
-                    suggestions.Add($"{samAccountName} ({cn}) ");
+                    catch
+                    {
+                        suggestions.Add($"{samAccountName} ({cn}) ");
+                    }
                 }
             }
 
+            catch
+            {
+                suggestions.Clear();
+            }
+
+            search.Dispose();
+
             return suggestions;
         }
-
 
         /// <summary>
         ///     Displays the auto-complete dropdown under the user search textbox.
@@ -113,6 +124,7 @@ namespace VDITroubleshooter
             listboxSuggestions.Visibility = Visibility.Collapsed;
             listboxSuggestions.ItemsSource = null;
             textboxUserSearch.Focus();
+            textboxUserSearch.CaretIndex = textboxUserSearch.Text.Length;
         }
 
         private void GetUserData()
@@ -137,6 +149,13 @@ namespace VDITroubleshooter
             // TODO
         }
 
+        private void HandleEsc(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                HideUserSuggestions();
+            }
+        }
 
         private void textboxUserSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -211,6 +230,7 @@ namespace VDITroubleshooter
         {
             if (ReferenceEquals(sender, listboxSuggestions) && (listboxSuggestions.SelectedItem != null))
             {
+                e.Handled = true;
                 textboxUserSearch.Text = listboxSuggestions.SelectedItem.ToString().Split()[0];
                 listboxSuggestions.Visibility = Visibility.Collapsed;
             }
@@ -219,15 +239,29 @@ namespace VDITroubleshooter
 
         private void listboxSuggestions_LostFocus(object sender, RoutedEventArgs e)
         {
-
-            
             if (ReferenceEquals(sender, listboxSuggestions))
             {
-
             }
+
             else
             {
                 HideUserSuggestions();
+            }
+        }
+
+        private void listviewUsersDesktops_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            if (listviewUsersOtherVMs.SelectedItem != null && listviewUsersDesktops.SelectedItem != null)
+            {
+                listviewUsersOtherVMs.UnselectAll();
+            }
+        }
+
+        private void listviewUsersOtherVMs_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            if (listviewUsersDesktops.SelectedItem != null && listviewUsersOtherVMs.SelectedItem != null)
+            {
+               listviewUsersDesktops.UnselectAll();
             }
         }
     }

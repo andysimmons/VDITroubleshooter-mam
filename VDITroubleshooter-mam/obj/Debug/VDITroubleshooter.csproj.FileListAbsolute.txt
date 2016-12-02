@@ -52,7 +52,6 @@ D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\Microsoft
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\Microsoft.VisualStudio.Threading.xml
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\Microsoft.VisualStudio.Utilities.xml
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\Microsoft.VisualStudio.CoreUtility.xml
-D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter.csprojResolveAssemblyReference.cache
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\Resources\Icons.baml
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\Resources\IconsNonShared.baml
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\MainWindow.g.cs
@@ -64,3 +63,4 @@ D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\MainWindo
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter-mam.g.resources
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter_mam.Properties.Resources.resources
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter.csproj.GenerateResource.Cache
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter.csprojResolveAssemblyReference.cache

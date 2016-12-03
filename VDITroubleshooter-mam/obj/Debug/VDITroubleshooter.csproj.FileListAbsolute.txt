@@ -64,3 +64,8 @@ D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubl
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter_mam.Properties.Resources.resources
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter.csproj.GenerateResource.Cache
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter.csprojResolveAssemblyReference.cache
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\MaterialDesignColors.dll
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\MaterialDesignThemes.MahApps.dll
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\MaterialDesignThemes.Wpf.dll
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\MaterialDesignThemes.Wpf.pdb
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\MaterialDesignThemes.Wpf.xml

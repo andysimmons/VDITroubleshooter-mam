@@ -1,6 +1,9 @@
 ﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,6 +23,10 @@ namespace VDITroubleshooter
 
             PreviewKeyDown += new KeyEventHandler(HandleEsc);
         }
+
+        private CancellationTokenSource cts;
+
+        private string acceptedText = "";
 
         /// <summary>
         ///     Searches AD for an explicit username and returns the result.
@@ -65,7 +72,7 @@ namespace VDITroubleshooter
                     {
                         string title = result.Properties["title"]?[0]?.ToString();
                         string department = result.Properties["department"]?[0]?.ToString();
-                                                
+
                         suggestions.Add($"{samAccountName} ({cn}  ::  {title}  ::  {department}) ");
                     }
 
@@ -92,7 +99,7 @@ namespace VDITroubleshooter
         /// <param name="Suggestions">List of suggested matches.</param>
         private void ShowUserSuggestions(List<string> Suggestions)
         {
-            if (Suggestions.Count > 0)
+            if (Suggestions.Count > 0 && textboxUserSearch.Text != acceptedText)
             {
                 listboxSuggestions.ItemsSource = Suggestions;
                 listboxSuggestions.Visibility = Visibility.Visible;
@@ -110,8 +117,20 @@ namespace VDITroubleshooter
         {
             if (listboxSuggestions.SelectedItem != null)
             {
-                // set the search text to just the SAM account name from the suggestion string
+                try
+                {
+                    cts?.Cancel();
+                }
+                catch (ObjectDisposedException)
+                {
+                }
+
+                textboxUserSearch.TextChanged -= textboxUserSearch_TextChanged;
+
                 textboxUserSearch.Text = listboxSuggestions.SelectedItem.ToString().Split()[0].ToLowerInvariant();
+                acceptedText = textboxUserSearch.Text;
+
+                textboxUserSearch.TextChanged += textboxUserSearch_TextChanged;
             }
 
             HideUserSuggestions();
@@ -122,8 +141,8 @@ namespace VDITroubleshooter
         /// </summary>
         private void HideUserSuggestions()
         {
-            listboxSuggestions.Visibility = Visibility.Collapsed;
             listboxSuggestions.ItemsSource = null;
+            listboxSuggestions.Visibility = Visibility.Collapsed;
 
             if (!textboxUserSearch.IsFocused)
             {
@@ -162,28 +181,54 @@ namespace VDITroubleshooter
             }
         }
 
-        private void textboxUserSearch_TextChanged(object sender, TextChangedEventArgs e)
+        private async void textboxUserSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // Cancel previous searches
+            try
+            {
+                cts?.Cancel();
+            }
+            catch (ObjectDisposedException)
+            {
+            }
+
             string partialUserName = textboxUserSearch.Text;
 
             // Try ambigious name resolution if we have at least 3 letters to search on
-            if (partialUserName.Length >= 3)
+            using (cts = new CancellationTokenSource())
             {
-                List<string> anrHits = GetUserSuggestions(partialUserName, 8);
+                try
+                {
+                    if (partialUserName.Length >= 3)
+                    {
+                        await Task.Delay(TimeSpan.FromMilliseconds(250), cts.Token);
 
-                ShowUserSuggestions(anrHits);                
-            }
+                        if (partialUserName == textboxUserSearch.Text)
+                        {
+                            List<string> anrHits = GetUserSuggestions(partialUserName, 8);
 
-            else
-            {
-                HideUserSuggestions();
+                            ShowUserSuggestions(anrHits);
+                        }
+                    }
+                    else
+                    {
+                        HideUserSuggestions();
+                    }
+                }
+                catch
+                {
+                }
             }
         }
 
         private void textboxUserSearch_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.Key == Key.Down))
+            if ((e.Key == Key.Down) && listboxSuggestions.ItemsSource != null)
             {
+                if (listboxSuggestions.SelectedItem == null)
+                {
+                    listboxSuggestions.SelectedIndex = 0;
+                }
                 listboxSuggestions.Focus();
             }
             else if (e.Key == Key.Enter)
@@ -235,8 +280,7 @@ namespace VDITroubleshooter
             if (ReferenceEquals(sender, listboxSuggestions) && (listboxSuggestions.SelectedItem != null))
             {
                 e.Handled = true;
-                textboxUserSearch.Text = listboxSuggestions.SelectedItem.ToString().Split()[0];
-                listboxSuggestions.Visibility = Visibility.Collapsed;
+                AcceptSuggestion();
             }
         }
 
@@ -267,6 +311,24 @@ namespace VDITroubleshooter
             {
                listviewUsersDesktops.UnselectAll();
             }
+        }
+
+        private void buttonClearSearch_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (buttonClearSearch.IsEnabled)
+            {
+                buttonClearSearch.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                buttonClearSearch.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void buttonClearSearch_Click(object sender, RoutedEventArgs e)
+        {
+            textboxUserSearch.Clear();
+            textboxUserSearch.Focus();
         }
     }
 }

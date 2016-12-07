@@ -24,7 +24,9 @@ namespace VDITroubleshooter
             PreviewKeyDown += new KeyEventHandler(HandleEsc);
         }
 
-        private CancellationTokenSource cts;
+        private CancellationTokenSource ctsGetSuggestions;
+
+        private CancellationTokenSource ctsSuppressor;
 
         private string acceptedText = "";
 
@@ -99,14 +101,16 @@ namespace VDITroubleshooter
         /// <param name="Suggestions">List of suggested matches.</param>
         private void ShowUserSuggestions(List<string> Suggestions)
         {
-            if (Suggestions.Count > 0 && textboxUserSearch.Text != acceptedText)
+            bool isAlreadyAccepted = string.Equals(acceptedText, textboxUserSearch.Text, StringComparison.OrdinalIgnoreCase);
+
+            if (isAlreadyAccepted || Suggestions.Count == 0)
             {
-                listboxSuggestions.ItemsSource = Suggestions;
-                listboxSuggestions.Visibility = Visibility.Visible;
+                HideUserSuggestions();
             }
             else
             {
-                HideUserSuggestions();
+                listboxSuggestions.ItemsSource = Suggestions;
+                listboxSuggestions.Visibility = Visibility.Visible;
             }
         }
 
@@ -117,23 +121,58 @@ namespace VDITroubleshooter
         {
             if (listboxSuggestions.SelectedItem != null)
             {
+                // Stop any threads that generate new suggestions
                 try
                 {
-                    cts?.Cancel();
+                    ctsGetSuggestions?.Cancel();
                 }
                 catch (ObjectDisposedException)
                 {
                 }
 
+                // Accept the suggestion
+                acceptedText = listboxSuggestions.SelectedItem.ToString().Split()[0].ToLower();
+
                 textboxUserSearch.TextChanged -= textboxUserSearch_TextChanged;
-
-                textboxUserSearch.Text = listboxSuggestions.SelectedItem.ToString().Split()[0].ToLowerInvariant();
-                acceptedText = textboxUserSearch.Text;
-
+                textboxUserSearch.Text = acceptedText;
                 textboxUserSearch.TextChanged += textboxUserSearch_TextChanged;
+
+                // Hold off on more suggestions for a couple seconds (for the current string)
+                SuppressRedundantSuggestions_Async();
             }
 
             HideUserSuggestions();
+        }
+
+        /// <summary>
+        ///     Temporarily suppress automatic background searching for a given search string.
+        /// </summary>
+        /// <param name="Seconds">Duration (sec) before resuming normal behavior.</param>
+        private async void SuppressRedundantSuggestions_Async(int Seconds = 2)
+        {
+            try
+            {
+                ctsSuppressor?.Cancel();
+            }
+            catch (ObjectDisposedException) { }
+
+            string previouslyAcceptedText = acceptedText;
+
+            using (ctsSuppressor = new CancellationTokenSource())
+            {
+                try
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(Seconds), ctsSuppressor.Token);
+
+                    // If the most recently accepted text hasn't changed since we've started, quit suppressing
+                    // suggestions for it.
+                    if (string.Equals(previouslyAcceptedText, acceptedText, StringComparison.OrdinalIgnoreCase))
+                    {
+                        acceptedText = "";
+                    }
+                }
+                catch { }
+            }
         }
 
         /// <summary>
@@ -186,7 +225,7 @@ namespace VDITroubleshooter
             // Cancel previous searches
             try
             {
-                cts?.Cancel();
+                ctsGetSuggestions?.Cancel();
             }
             catch (ObjectDisposedException)
             {
@@ -195,13 +234,13 @@ namespace VDITroubleshooter
             string partialUserName = textboxUserSearch.Text;
 
             // Try ambigious name resolution if we have at least 3 letters to search on
-            using (cts = new CancellationTokenSource())
+            using (ctsGetSuggestions = new CancellationTokenSource())
             {
                 try
                 {
                     if (partialUserName.Length >= 3)
                     {
-                        await Task.Delay(TimeSpan.FromMilliseconds(250), cts.Token);
+                        await Task.Delay(TimeSpan.FromMilliseconds(250), ctsGetSuggestions.Token);
 
                         if (partialUserName == textboxUserSearch.Text)
                         {
@@ -329,6 +368,11 @@ namespace VDITroubleshooter
         {
             textboxUserSearch.Clear();
             textboxUserSearch.Focus();
+        }
+
+        private void buttonSearch_Click(object sender, RoutedEventArgs e)
+        {
+            HideUserSuggestions();
         }
     }
 }

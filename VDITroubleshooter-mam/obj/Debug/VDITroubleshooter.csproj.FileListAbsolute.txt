@@ -69,3 +69,7 @@ D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\MaterialD
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\MaterialDesignThemes.Wpf.dll
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\MaterialDesignThemes.Wpf.pdb
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\MaterialDesignThemes.Wpf.xml
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\VDITroubleshooter-mam.exe.manifest
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\VDITroubleshooter-mam.application
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter-mam.exe.manifest
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter-mam.application

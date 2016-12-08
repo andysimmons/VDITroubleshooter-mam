@@ -8,12 +8,17 @@ namespace VDITroubleshooter
 {
     class UserSuggestion
     {
-        public string SAMAccountName { get; set; }
-
         public string CN { get; set; }
+
+        public string SAMAccountName { get; set; }
 
         public string Department { get; set; }
 
         public string Title { get; set; }
+
+        public override string ToString()
+        {
+            return SAMAccountName;
+        }
     }
 }

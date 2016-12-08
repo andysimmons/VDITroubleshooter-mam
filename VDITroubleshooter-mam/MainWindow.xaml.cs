@@ -49,9 +49,9 @@ namespace VDITroubleshooter
         /// <returns>
         ///     Returns a list of potential AD user matches as strings.
         /// </returns>
-        private static List<string> GetUserSuggestions(string AmbiguousName, int MaxResults)
+        private static List<UserSuggestion> GetUserSuggestions(string AmbiguousName, int MaxResults)
         {
-            var suggestions = new List<string>();
+            var suggestions = new List<UserSuggestion>();
 
             var search = new DirectorySearcher($"(&(anr={AmbiguousName})(ObjectCategory=Person))");
             search.PropertiesToLoad.Add("samAccountName");
@@ -68,19 +68,30 @@ namespace VDITroubleshooter
                 {
                     string samAccountName = result.Properties["samAccountName"][0].ToString();
                     string cn = result.Properties["cn"][0].ToString();
+                    string title;
+                    string department;
 
                     try
                     {
-                        string title = result.Properties["title"]?[0]?.ToString();
-                        string department = result.Properties["department"]?[0]?.ToString();
-
-                        suggestions.Add($"{samAccountName} ({cn}  ::  {title}  ::  {department}) ");
+                        title = result.Properties["title"]?[0]?.ToString();
+                        department = result.Properties["department"]?[0]?.ToString();
                     }
 
                     catch
                     {
-                        suggestions.Add($"{samAccountName} ({cn}) ");
+                        title = null;
+                        department = null;
                     }
+
+                    var suggestion = new UserSuggestion
+                    {
+                        SAMAccountName = samAccountName,
+                        CN = cn,
+                        Department = department,
+                        Title = title
+                    };
+
+                    suggestions.Add(suggestion);
                 }
             }
 
@@ -98,7 +109,7 @@ namespace VDITroubleshooter
         ///     Displays the auto-complete dropdown under the user search textbox.
         /// </summary>
         /// <param name="Suggestions">List of suggested matches.</param>
-        private void ShowUserSuggestions(List<string> Suggestions)
+        private void ShowUserSuggestions(List<UserSuggestion> Suggestions)
         {
             bool isAlreadyAccepted = string.Equals(acceptedText, textboxUserSearch.Text, StringComparison.OrdinalIgnoreCase);
 
@@ -245,7 +256,7 @@ namespace VDITroubleshooter
 
                         if (partialUserName == textboxUserSearch.Text)
                         {
-                            List<string> anrHits = GetUserSuggestions(partialUserName, 8);
+                            List<UserSuggestion> anrHits = GetUserSuggestions(partialUserName, 8);
 
                             ShowUserSuggestions(anrHits);
                         }

@@ -411,14 +411,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VDITroubleshooter.exe" size="3048872">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VDITroubleshooter.exe" size="3050408">
       <assemblyIdentity name="VDITroubleshooter" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Lg+53fZ9CZwKpmHaeRTbtzhHr+5prgQ9QY7+SMSd8No=</dsig:DigestValue>
+        <dsig:DigestValue>NiGW6UxLfucav/AFAgN5jQsEPtnt3AmMYO8nJrDNKM8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

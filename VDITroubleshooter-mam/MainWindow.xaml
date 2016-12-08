@@ -154,9 +154,8 @@
                      HorizontalAlignment="Left" 
                      Height="Auto" 
                      VerticalAlignment="Top" 
-                     Width="Auto"
-                     MinWidth="180"
-                     MaxHeight="200"
+                     Width="400"
+                     MaxHeight="240"
                      Margin="0"
                      Visibility="Collapsed"
                      KeyDown="listboxSuggestions_KeyDown"  
@@ -165,8 +164,50 @@
                      BorderThickness="0" 
                      MouseDoubleClick="listboxSuggestions_MouseDoubleClick" 
                      LostFocus="listboxSuggestions_LostFocus" 
-                     Background="White" RenderTransformOrigin="0.0,0.0"
-                     TabIndex="1">
+                     Background="White" 
+                     RenderTransformOrigin="0.0,0.0"
+                     TabIndex="1"
+                     HorizontalContentAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate xml:space="preserve">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="{Binding SAMAccountName}"
+                                       Grid.Column="0"
+                                       FontWeight="Medium"/>
+                                <TextBlock Text="{Binding CN}"
+                                       TextTrimming="CharacterEllipsis"
+                                       MaxWidth="200"
+                                       Opacity=".9"
+                                       Margin="0"
+                                       HorizontalAlignment="Left"
+                                       FontSize="12px"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical"
+                                        Grid.Column="1"
+                                        MaxWidth="300">
+                                <TextBlock Text="{Binding Title, TargetNullValue=''}"
+                                           Margin="8,0,4,0"
+                                           TextTrimming="CharacterEllipsis"
+                                           HorizontalAlignment="Right"
+                                           Opacity=".9"/>
+                                <TextBlock Margin="8,0,4,0" Text="{Binding Department, TargetNullValue=''}"
+                                       TextTrimming="CharacterEllipsis"
+                                       HorizontalAlignment="Right"
+                                           FontSize="12px"
+                                           Opacity=".5"/>
+                            </StackPanel>
+                            
+                            </Grid>
+                        
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
             </ListBox>
         </materialDesign:Card>
 
@@ -403,47 +444,47 @@
                             <materialDesign:Card Margin="4"
                                                  UniformCornerRadius="2"
                                                  Padding="2">
-                                    <ListBox Name="listboxVirtualDesktops"
+                                <ListBox Name="listboxVirtualDesktops"
                                          Height="100"
                                          Width="330"
                                          HorizontalContentAlignment="Stretch">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
 
-                                                    <StackPanel Orientation="Horizontal"
+                                                <StackPanel Orientation="Horizontal"
                                                             Grid.Column="0"
                                                             Margin="0,0,16,0">
-                                                        <TextBlock Text="{Binding HostedMachineName}"
-                                                                   FontWeight="Medium"/>
-                                                        <TextBlock Text=" ("
+                                                    <TextBlock Text="{Binding HostedMachineName}"
+                                                               FontWeight="Medium"/>
+                                                    <TextBlock Text=" ("
                                                                Opacity=".9"/>
-                                                        <TextBlock Text="{Binding SessionState}"
+                                                    <TextBlock Text="{Binding SessionState}"
                                                                Opacity=".9"/>
-                                                        <TextBlock Text=")"
+                                                    <TextBlock Text=")"
                                                                Opacity=".9"/>
-                                                    </StackPanel>
-                                                    <TextBlock Grid.Column="1"
-                                                        Text="{Binding DesktopGroupName}"
-                                                               Opacity=".7"
-                                                               HorizontalAlignment="Right"
-                                                               TextTrimming="CharacterEllipsis"/>
-                                                </Grid>
+                                                </StackPanel>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{Binding DesktopGroupName}"
+                                                           Opacity=".7"
+                                                           HorizontalAlignment="Right"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </Grid>
 
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
 
-                                        <!-- Placeholder items -->
-                                        <local:VirtualDesktop HostedMachineName="XDBP07GCD00193" SessionState="Active" DesktopGroupName="TV Clinician Desktop"/>
-                                        <local:VirtualDesktop HostedMachineName="V02-PD-00036" SessionState="Disconnected" DesktopGroupName="Windows 7 Personal Desktop"/>
-                                        <local:VirtualDesktop HostedMachineName="XDTP07GCD00124" SessionState="Available" DesktopGroupName="MV Clinician Desktop"/>
+                                    <!-- Placeholder items -->
+                                    <local:VirtualDesktop HostedMachineName="XDBP07GCD00193" SessionState="Active" DesktopGroupName="TV Clinician Desktop"/>
+                                    <local:VirtualDesktop HostedMachineName="V02-PD-00036" SessionState="Disconnected" DesktopGroupName="Windows 7 Personal Desktop"/>
+                                    <local:VirtualDesktop HostedMachineName="XDTP07GCD00124" SessionState="Available" DesktopGroupName="MV Clinician Desktop"/>
 
 
-                                    </ListBox>
+                                </ListBox>
 
                             </materialDesign:Card>
                             <Grid Name="gridSessionDetails">

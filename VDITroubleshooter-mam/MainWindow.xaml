@@ -37,11 +37,19 @@
             <Style x:Key="PropertyName"  TargetType="{x:Type Label}">
                 <Setter Property="FontWeight" Value="Medium" />
                 <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Grid.Column" Value="0" />
+            </Style>
+            <Style x:Key="LeftPropertyName" TargetType="{x:Type Label}">
+                <Setter Property="FontWeight" Value="Medium" />
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Grid.Column" Value="0" />                
             </Style>
             <Style x:Key="PropertyValue"  TargetType="{x:Type Label}">
                 <Setter Property="FontWeight" Value="Normal" />
                 <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Grid.Column" Value="1" />
             </Style>
             <Style TargetType="materialDesign:Card">
@@ -66,7 +74,7 @@
                                 </Storyboard>
                             </BeginStoryboard>
                         </Trigger.EnterActions>
-                        
+
                         <Trigger.ExitActions>
                             <BeginStoryboard>
                                 <Storyboard>
@@ -380,146 +388,152 @@
                     </GroupBox>
                 </StackPanel>
 
-                <GroupBox x:Name="groupboxSessionManagement"
-                          IsTabStop="False"
-                          Header="Session Management"
-                          Grid.Column="1"
-                          Style="{DynamicResource MaterialDesignCardGroupBox}" 
-                          Margin="16">
 
-                    <StackPanel x:Name="stackpanelSessions">
-                        <Grid x:Name="gridSessionPicker" 
-                              Height="104">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Name="stackpanelUsersSessions"
-                                        Grid.Column="0">
 
-                                <GroupBox Name="groupboxUsersSessions"
-                                          Header="User's Sessions"
-                                          Style="{DynamicResource MaterialDesignGroupBox}" 
-                                          BorderThickness="1"
-                                          Margin="4"
-                                          IsTabStop="False">
-                                    <ListView Name="listviewUsersDesktops"
-                                              Height="54"
-                                              SelectionChanged="listviewUsersDesktops_SelectionChanged"
-                                              BorderThickness="0"
-                                              Background="Transparent">
-                                        <ListViewItem>SomeActiveVM</ListViewItem>
-                                        <ListViewItem>SomeOtherActiveVM</ListViewItem>
-                                    </ListView>
-                                </GroupBox>
-                            </StackPanel>
-                            <StackPanel Name="stackpanelUsersOtherVMs"
-                                        Grid.Column="1">
-                                <GroupBox Name="groupboxUsersOtherVMs"
-                                          Header="User's Other VMs"
-                                          BorderThickness="1"
-                                          Style="{DynamicResource MaterialDesignGroupBox}" 
-                                          Margin="4"
-                                          IsTabStop="False">
-                                    <ListView Name="listviewUsersOtherVMs" 
-                                              BorderThickness="0"
-                                              Background="Transparent"
-                                              Height="54"
-                                              SelectionChanged="listviewUsersOtherVMs_SelectionChanged"
-                                              Margin="2,0,0,0">
-                                        <ListViewItem>SomeOtherVM</ListViewItem>
-                                    </ListView>
-                                </GroupBox>
-                            </StackPanel>
+                <StackPanel x:Name="stackpanelSessions"
+                            Grid.Column="1">
 
-                        </Grid>
-                        <Border BorderBrush="{DynamicResource MaterialDesignDivider}"
-                                BorderThickness="1"
-                                Margin="8,0,8,8"/>
-                        <Grid Name="gridSessionDetails">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Name="rowSessionState" />
-                                <RowDefinition Name="rowTimeInState" />
-                                <RowDefinition Name="rowDeliveryGroup" />
-                                <RowDefinition Name="rowDesktopType" />
-                                <RowDefinition Name="rowRegistrationState" />
-                                <RowDefinition Name="rowVmInternalState" />
-                                <RowDefinition Name="rowSite" />
-                                <RowDefinition Name="rowDDC" />
-                                <RowDefinition Name="rowFaultState" />
-                                <RowDefinition Name="rowIsHung" />
-                            </Grid.RowDefinitions>
+                    <GroupBox x:Name="groupboxVirtualDesktops"
+                              IsTabStop="False"
+                              Header="Virtual Desktops"
+                              Grid.Column="1"
+                              Style="{DynamicResource MaterialDesignCardGroupBox}" 
+                              Margin="16">
+                        <StackPanel Name="stackpanelSessionDetails">
+                            <materialDesign:Card Margin="4"
+                                                 UniformCornerRadius="2"
+                                                 Padding="2">
+                                    <ListBox Name="listboxVirtualDesktops"
+                                         Height="100"
+                                         Width="330"
+                                         HorizontalContentAlignment="Stretch">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
 
-                            <!-- Column 0 -->
-                            <Label Name="labelSessionState"
-                                   Style="{StaticResource PropertyName}"
-                                   Grid.Row="0">Session State</Label>
-                            <Label Name="labelTimeInState" 
-                                   Style="{StaticResource PropertyName}"
-                                   Grid.Row="1">Time In State</Label>
-                            <Label Name="labelDeliveryGroup" 
-                                   Style="{StaticResource PropertyName}"
-                                   Grid.Row="2">Delivery Group</Label>
-                            <Label Name="labelDesktopType" 
-                                   Style="{StaticResource PropertyName}"
-                                   Grid.Row="3">DesktopType</Label>
-                            <Label Name="labelRegistrationState" 
-                                   Style="{StaticResource PropertyName}"
-                                   Grid.Row="4">Registration State</Label>
-                            <Label Name="labelVmInternalState" 
-                                   Style="{StaticResource PropertyName}"
-                                   Grid.Row="5">VM Internal State</Label>
-                            <Label Name="labelSite"
-                                   Style="{StaticResource PropertyName}"
-                                   Grid.Row="6">Site</Label>
-                            <Label Name="labelDDC"
-                                   Style="{StaticResource PropertyName}"
-                                   Grid.Row="7">DDC</Label>
-                            <Label Name="labelFaultState"
-                                   Style="{StaticResource PropertyName}"
-                                   Grid.Row="8">Fault State</Label>
-                            <Label Name="labelIsHung"
-                                   Style="{StaticResource PropertyName}"
-                                   Grid.Row="9">Hung?</Label>
+                                                    <StackPanel Orientation="Horizontal"
+                                                            Grid.Column="0"
+                                                            Margin="0,0,16,0">
+                                                        <TextBlock Text="{Binding HostedMachineName}"
+                                                                   FontWeight="Medium"/>
+                                                        <TextBlock Text=" ("
+                                                               Opacity=".9"/>
+                                                        <TextBlock Text="{Binding SessionState}"
+                                                               Opacity=".9"/>
+                                                        <TextBlock Text=")"
+                                                               Opacity=".9"/>
+                                                    </StackPanel>
+                                                    <TextBlock Grid.Column="1"
+                                                        Text="{Binding DesktopGroupName}"
+                                                               Opacity=".7"
+                                                               HorizontalAlignment="Right"
+                                                               TextTrimming="CharacterEllipsis"/>
+                                                </Grid>
 
-                            <!-- Column 1 -->
-                            <Label Name="labelSessionStateResult"
-                                   Style="{StaticResource PropertyValue}"
-                                   Grid.Row="0">Session State Result</Label>
-                            <Label Name="labelTimeInStateResult" 
-                                   Style="{StaticResource PropertyValue}"
-                                   Grid.Row="1">Time in State Result</Label>
-                            <Label Name="labelDeliveryGroupResult" 
-                                   Style="{StaticResource PropertyValue}"
-                                   Grid.Row="2">Delivery Group Result</Label>
-                            <Label Name="labelDesktopTypeResult" 
-                                   Style="{StaticResource PropertyValue}"
-                                   Grid.Row="3">Desktop Type Result</Label>
-                            <Label Name="labelRegistrationStateResult" 
-                                   Style="{StaticResource PropertyValue}"
-                                   Grid.Row="4">Registration State Result</Label>
-                            <Label Name="labelVmInternalStateResult" 
-                                   Style="{StaticResource PropertyValue}"
-                                   Grid.Row="5">VM Internal State Result</Label>
-                            <Label Name="labelSiteResult"
-                                   Style="{StaticResource PropertyValue}"
-                                   Grid.Row="6">Site Result</Label>
-                            <Label Name="labelDDCResult"
-                                   Style="{StaticResource PropertyValue}"
-                                   Grid.Row="7">DDC Result</Label>
-                            <Label Name="labelFaultStateResult"
-                                   Style="{StaticResource PropertyValue}"
-                                   Grid.Row="8">Fault State Result</Label>
-                            <Label Name="labelIsHungResult"
-                                   Style="{StaticResource PropertyValue}"
-                                   Grid.Row="9">Hung Result</Label>
-                        </Grid>
-                    </StackPanel>
-                </GroupBox>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+
+                                        <!-- Placeholder items -->
+                                        <local:VirtualDesktop HostedMachineName="XDBP07GCD00193" SessionState="Active" DesktopGroupName="TV Clinician Desktop"/>
+                                        <local:VirtualDesktop HostedMachineName="V02-PD-00036" SessionState="Disconnected" DesktopGroupName="Windows 7 Personal Desktop"/>
+                                        <local:VirtualDesktop HostedMachineName="XDTP07GCD00124" SessionState="Available" DesktopGroupName="MV Clinician Desktop"/>
+
+
+                                    </ListBox>
+
+                            </materialDesign:Card>
+                            <Grid Name="gridSessionDetails">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="178*" />
+                                    <ColumnDefinition Width="21*" />
+                                    <ColumnDefinition Width="157*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Name="rowSessionState" />
+                                    <RowDefinition Name="rowTimeInState" />
+                                    <RowDefinition Name="rowDeliveryGroup" />
+                                    <RowDefinition Name="rowDesktopType" />
+                                    <RowDefinition Name="rowRegistrationState" />
+                                    <RowDefinition Name="rowVmInternalState" />
+                                    <RowDefinition Name="rowSite" />
+                                    <RowDefinition Name="rowDDC" />
+                                    <RowDefinition Name="rowFaultState" />
+                                    <RowDefinition Name="rowIsHung" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Column 0 -->
+                                <Label Name="labelSessionState"
+                                       Style="{StaticResource PropertyName}"
+                                       Grid.Row="0">Session State</Label>
+                                <Label Name="labelTimeInState" 
+                                       Style="{StaticResource PropertyName}"
+                                       Grid.Row="1">Time In State</Label>
+                                <Label Name="labelDeliveryGroup" 
+                                       Style="{StaticResource PropertyName}"
+                                       Grid.Row="2">Delivery Group</Label>
+                                <Label Name="labelDesktopType" 
+                                       Style="{StaticResource PropertyName}"
+                                       Grid.Row="3">DesktopType</Label>
+                                <Label Name="labelRegistrationState" 
+                                       Style="{StaticResource PropertyName}"
+                                       Grid.Row="4">Registration State</Label>
+                                <Label Name="labelVmInternalState" 
+                                       Style="{StaticResource PropertyName}"
+                                       Grid.Row="5">VM Internal State</Label>
+                                <Label Name="labelSite"
+                                       Style="{StaticResource PropertyName}"
+                                       Grid.Row="6">Site</Label>
+                                <Label Name="labelDDC"
+                                       Style="{StaticResource PropertyName}"
+                                       Grid.Row="7">DDC</Label>
+                                <Label Name="labelFaultState"
+                                       Style="{StaticResource PropertyName}"
+                                       Grid.Row="8">Fault State</Label>
+                                <Label Name="labelIsHung"
+                                       Style="{StaticResource PropertyName}"
+                                       Grid.Row="9">Hung?</Label>
+
+                                <!-- Column 1 -->
+                                <Label Name="labelSessionStateResult"
+                                       Style="{StaticResource PropertyValue}"
+                                       Grid.Row="0" Grid.ColumnSpan="2">Session State Result</Label>
+                                <Label Name="labelTimeInStateResult" 
+                                       Style="{StaticResource PropertyValue}"
+                                       Grid.Row="1" Grid.ColumnSpan="2">Time in State Result</Label>
+                                <Label Name="labelDeliveryGroupResult" 
+                                       Style="{StaticResource PropertyValue}"
+                                       Grid.Row="2" Grid.ColumnSpan="2">Delivery Group Result</Label>
+                                <Label Name="labelDesktopTypeResult" 
+                                       Style="{StaticResource PropertyValue}"
+                                       Grid.Row="3" Grid.ColumnSpan="2">Desktop Type Result</Label>
+                                <Label Name="labelRegistrationStateResult" 
+                                       Style="{StaticResource PropertyValue}"
+                                       Grid.Row="4" Grid.ColumnSpan="2">Registration State Result</Label>
+                                <Label Name="labelVmInternalStateResult" 
+                                       Style="{StaticResource PropertyValue}"
+                                       Grid.Row="5" Grid.ColumnSpan="2">VM Internal State Result</Label>
+                                <Label Name="labelSiteResult"
+                                       Style="{StaticResource PropertyValue}"
+                                       Grid.Row="6" Grid.ColumnSpan="2">Site Result</Label>
+                                <Label Name="labelDDCResult"
+                                       Style="{StaticResource PropertyValue}"
+                                       Grid.Row="7" Grid.ColumnSpan="2">DDC Result</Label>
+                                <Label Name="labelFaultStateResult"
+                                       Style="{StaticResource PropertyValue}"
+                                       Grid.Row="8" Grid.ColumnSpan="2">Fault State Result</Label>
+                                <Label Name="labelIsHungResult"
+                                       Style="{StaticResource PropertyValue}"
+                                       Grid.Row="9" Grid.ColumnSpan="2">Hung Result</Label>
+                            </Grid>
+                        </StackPanel>
+
+                    </GroupBox>
+                </StackPanel>
+
 
                 <!-- Sessions -->
 
@@ -530,6 +544,49 @@
                           Margin="16"
                           Grid.Column="2"
                           IsTabStop="False">
+                    <StackPanel Name="stackpanelUserDevices">
+                        <Grid Name="gridEndpointSummary">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Name="labelEndpointName"
+                                   Content="Endpoint Name"
+                                   Grid.Row="0"
+                                   Style="{StaticResource LeftPropertyName}"/>
+                            <Label Name="labelEndpointNameResult"
+                                   Content="Endpoint Name Result"
+                                   Grid.Row="0"
+                                   Style="{StaticResource PropertyValue}"/>
+                            
+                            <Label Name="labelEndpointLastKnownIP"
+                                   Content="Last Known IP"
+                                   Grid.Row="1"
+                                   Style="{StaticResource LeftPropertyName}"/>
+                            <Label Name="labelEndpointLastKnownIPResult"
+                                   Content="123.45.67.89"
+                                   Grid.Row="1"
+                                   Style="{StaticResource PropertyValue}"/>
+                            <RadioButton Name="radioInternal"
+                                         Content="Internal"
+                                         Grid.Row="2"
+                                         Grid.Column="0"
+                                         Margin="4"/>
+                            <RadioButton Name="radioExternal"
+                                         Content="External"
+                                         Grid.Row="2"
+                                         Grid.Column="1"
+                                         Margin="4"/>
+
+                        </Grid>
+                        
+                    </StackPanel>
                 </GroupBox>
             </Grid>
             <GroupBox Name="groupboxConnectionLog"

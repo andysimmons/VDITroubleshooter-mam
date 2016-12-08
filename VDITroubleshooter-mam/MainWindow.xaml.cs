@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Threading;
@@ -60,7 +59,7 @@ namespace VDITroubleshooter
             search.PropertiesToLoad.Add("department");
             search.PropertiesToLoad.Add("title");
             search.SizeLimit = MaxResults;
-            search.ClientTimeout = System.TimeSpan.FromSeconds(1);
+            search.ClientTimeout = TimeSpan.FromSeconds(1);
             search.Asynchronous = true;
 
             try
@@ -171,7 +170,9 @@ namespace VDITroubleshooter
                         acceptedText = "";
                     }
                 }
-                catch { }
+                catch
+                {
+                }
             }
         }
 
@@ -336,22 +337,7 @@ namespace VDITroubleshooter
             }
         }
 
-        private void listviewUsersDesktops_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            if (listviewUsersOtherVMs.SelectedItem != null && listviewUsersDesktops.SelectedItem != null)
-            {
-                listviewUsersOtherVMs.UnselectAll();
-            }
-        }
-
-        private void listviewUsersOtherVMs_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            if (listviewUsersDesktops.SelectedItem != null && listviewUsersOtherVMs.SelectedItem != null)
-            {
-               listviewUsersDesktops.UnselectAll();
-            }
-        }
-
+        // Don't show the clear search button if it's disabled
         private void buttonClearSearch_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (buttonClearSearch.IsEnabled)

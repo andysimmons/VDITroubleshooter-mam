@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="VDITroubleshooter-mam.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="VDITroubleshooter.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="citrix-icon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="VDITroubleshooter-mam" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
-    <commandLine file="VDITroubleshooter-mam.exe" parameters="" />
+    <assemblyIdentity name="VDITroubleshooter" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="VDITroubleshooter.exe" parameters="" />
   </entryPoint>
   <trustInfo>
     <security>
@@ -411,14 +411,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VDITroubleshooter-mam.exe" size="3045800">
-      <assemblyIdentity name="VDITroubleshooter-mam" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VDITroubleshooter.exe" size="3048872">
+      <assemblyIdentity name="VDITroubleshooter" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Uvf1F695irGumlDup4arwawlPRq4iwDkx/xKxo7TdBs=</dsig:DigestValue>
+        <dsig:DigestValue>Lg+53fZ9CZwKpmHaeRTbtzhHr+5prgQ9QY7+SMSd8No=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -443,7 +443,7 @@
       <dsig:DigestValue>B2m+hUsev/THAFJEhNR4JCxVuyunTNnfJtdG2OheqXQ=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="VDITroubleshooter-mam.exe.config" size="189">
+  <file name="VDITroubleshooter.exe.config" size="189">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />

@@ -73,4 +73,5 @@ D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubl
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter.Properties.Resources.resources
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter.exe.manifest
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\VDITroubleshooter.application
-D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\VDITroubleshooter.BL.dll
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter-mam\bin\Debug\VDITroubleshooter.BL.pdb

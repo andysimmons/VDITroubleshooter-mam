@@ -1,0 +1,5 @@
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BL\bin\Debug\VDITroubleshooter.BL.dll
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BL\bin\Debug\VDITroubleshooter.BL.pdb
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BL\obj\Debug\VDITroubleshooter.BL.dll
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BL\obj\Debug\VDITroubleshooter.BL.pdb
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BL\obj\Debug\VDITroubleshooter.BL.csprojResolveAssemblyReference.cache

@@ -154,7 +154,7 @@
                      HorizontalAlignment="Left" 
                      Height="Auto" 
                      VerticalAlignment="Top" 
-                     Width="400"
+                     Width="360"
                      MaxHeight="240"
                      Margin="0"
                      Visibility="Collapsed"
@@ -175,35 +175,53 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Column="0">
+                            <StackPanel Grid.Column="0" Grid.Row="0">
                                 <TextBlock Text="{Binding SAMAccountName}"
-                                       Grid.Column="0"
-                                       FontWeight="Medium"/>
+                                           Grid.Column="0"
+                                           FontWeight="Medium"/>
                                 <TextBlock Text="{Binding CN}"
-                                       TextTrimming="CharacterEllipsis"
-                                       MaxWidth="200"
-                                       Opacity=".9"
-                                       Margin="0"
-                                       HorizontalAlignment="Left"
-                                       FontSize="12px"/>
+                                           TextTrimming="CharacterEllipsis"
+                                           MaxWidth="260"
+                                           Opacity=".6"
+                                           Margin="0"
+                                           HorizontalAlignment="Left"
+                                           FontSize="12px"/>
                             </StackPanel>
                             <StackPanel Orientation="Vertical"
                                         Grid.Column="1"
+                                        Grid.Row="0"
                                         MaxWidth="300">
                                 <TextBlock Text="{Binding Title, TargetNullValue=''}"
                                            Margin="8,0,4,0"
                                            TextTrimming="CharacterEllipsis"
                                            HorizontalAlignment="Right"
                                            Opacity=".9"/>
-                                <TextBlock Margin="8,0,4,0" Text="{Binding Department, TargetNullValue=''}"
-                                       TextTrimming="CharacterEllipsis"
-                                       HorizontalAlignment="Right"
+                                <TextBlock Margin="8,0,4,8" Text="{Binding Department, TargetNullValue=''}"
+                                           TextTrimming="CharacterEllipsis"
+                                           HorizontalAlignment="Right"
                                            FontSize="12px"
-                                           Opacity=".5"/>
+                                           Opacity=".6"/>
                             </StackPanel>
+                            <Border Grid.Row="1" 
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Height="1px"
+                                    Width="Auto"
+                                    Opacity=".4">
+                                <Border.Background>
+                                    <RadialGradientBrush>
+                                        <GradientStop Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"  Offset="0.5"/>
+                                        <GradientStop Color="Transparent" Offset="1"/>
+                                    </RadialGradientBrush>
+                                </Border.Background>
+                            </Border>
                             
-                            </Grid>
+                        </Grid>
                         
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -479,9 +497,11 @@
                                     </ListBox.ItemTemplate>
 
                                     <!-- Placeholder items -->
-                                    <local:VirtualDesktop HostedMachineName="XDBP07GCD00193" SessionState="Active" DesktopGroupName="TV Clinician Desktop"/>
+                                    <!--<local:VirtualDesktop HostedMachineName="XDBP07GCD00193" SessionState="Active" DesktopGroupName="TV Clinician Desktop"/>
                                     <local:VirtualDesktop HostedMachineName="V02-PD-00036" SessionState="Disconnected" DesktopGroupName="Windows 7 Personal Desktop"/>
-                                    <local:VirtualDesktop HostedMachineName="XDTP07GCD00124" SessionState="Available" DesktopGroupName="MV Clinician Desktop"/>
+                                    <local:VirtualDesktop HostedMachineName="XDTP07GCD00124" SessionState="Available" DesktopGroupName="MV Clinician Desktop"/>-->
+
+
 
 
                                 </ListBox>

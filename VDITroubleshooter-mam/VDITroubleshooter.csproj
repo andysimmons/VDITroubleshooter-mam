@@ -163,9 +163,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="User.cs" />
-    <Compile Include="UserSuggestion.cs" />
-    <Compile Include="VirtualDesktop.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -239,7 +236,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\" />
+    <ProjectReference Include="..\VDITroubleshooter.BL\VDITroubleshooter.BL.csproj">
+      <Project>{6e16530e-7f85-4059-a95e-9f18462a90d3}</Project>
+      <Name>VDITroubleshooter.BL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

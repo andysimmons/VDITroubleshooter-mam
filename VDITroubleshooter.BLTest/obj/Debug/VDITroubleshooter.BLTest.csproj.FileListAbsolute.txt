@@ -1,0 +1,8 @@
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\VDITroubleshooter.BLTest.dll
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\VDITroubleshooter.BLTest.pdb
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\VDITroubleshooter.BL.dll
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\VDITroubleshooter.BL.pdb
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\obj\Debug\VDITroubleshooter.BLTest.csprojResolveAssemblyReference.cache
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\obj\Debug\VDITroubleshooter.BLTest.dll
+D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\obj\Debug\VDITroubleshooter.BLTest.pdb

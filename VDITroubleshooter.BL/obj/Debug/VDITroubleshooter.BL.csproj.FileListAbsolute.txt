@@ -3,3 +3,11 @@ D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BL\bin\Debug\VDITrouble
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BL\obj\Debug\VDITroubleshooter.BL.dll
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BL\obj\Debug\VDITroubleshooter.BL.pdb
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BL\obj\Debug\VDITroubleshooter.BL.csprojResolveAssemblyReference.cache
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BL\bin\Debug\VDITroubleshooter.BL.dll
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BL\bin\Debug\VDITroubleshooter.BL.pdb
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BL\obj\Debug\VDITroubleshooter.BL.csprojResolveAssemblyReference.cache
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BL\obj\Debug\VDITroubleshooter.BL.dll
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BL\obj\Debug\VDITroubleshooter.BL.pdb
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BL\bin\Debug\BrokerSnapin.dll
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BL\bin\Debug\System.Management.Automation.dll
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BL\bin\Debug\FMAUtils.dll

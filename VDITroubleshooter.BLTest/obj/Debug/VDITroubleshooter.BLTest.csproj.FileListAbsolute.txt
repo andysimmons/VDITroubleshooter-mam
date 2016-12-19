@@ -6,3 +6,12 @@ D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\VDITro
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\obj\Debug\VDITroubleshooter.BLTest.csprojResolveAssemblyReference.cache
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\obj\Debug\VDITroubleshooter.BLTest.dll
 D:\Source\GitHub\VDITroubleshooter-mam\VDITroubleshooter.BLTest\obj\Debug\VDITroubleshooter.BLTest.pdb
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\VDITroubleshooter.BLTest.dll
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\VDITroubleshooter.BLTest.pdb
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\VDITroubleshooter.BL.dll
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\VDITroubleshooter.BL.pdb
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BLTest\obj\Debug\VDITroubleshooter.BLTest.csprojResolveAssemblyReference.cache
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BLTest\obj\Debug\VDITroubleshooter.BLTest.dll
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BLTest\obj\Debug\VDITroubleshooter.BLTest.pdb
+C:\Users\simmonsa\Source\Repos\VDITroubleshooter-mam\VDITroubleshooter.BLTest\bin\Debug\System.Management.Automation.dll

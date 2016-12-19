@@ -46,7 +46,7 @@ namespace VDITroubleshooter.BLTest
         public void ToString_NullDesktopGroup()
         {
             // Arrange
-            string expected = "hmnValue (Active)";
+            string expected = "hmnValue (stateValue)";
 
             var desktop = new VirtualDesktop()
             {

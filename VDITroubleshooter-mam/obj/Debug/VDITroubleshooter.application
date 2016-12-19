@@ -7,14 +7,14 @@
     <framework targetVersion="4.5.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="VDITroubleshooter.exe.manifest" size="26985">
+    <dependentAssembly dependencyType="install" codebase="VDITroubleshooter.exe.manifest" size="28328">
       <assemblyIdentity name="VDITroubleshooter.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>VxiX7uiz6yykeQrstBoVGpAVt78ADXB9+q01BKTTZQQ=</dsig:DigestValue>
+        <dsig:DigestValue>Ke6HwLsIG063OTz71j6rM2J0qfmPxL4DJo0zhWY85TQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Citrix.Broker.Admin.SDK;
 
 namespace VDITroubleshooter.BL
 {
@@ -30,6 +31,8 @@ namespace VDITroubleshooter.BL
         public string SessionState { get; set; }
 
         public string DesktopGroupName { get; set; }
+
+        public string DesktopType { get; set; }
 
         public static List<VirtualDesktop> GetPlaceholders()
         {

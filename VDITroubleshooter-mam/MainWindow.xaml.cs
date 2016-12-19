@@ -52,7 +52,7 @@ namespace VDITroubleshooter
         {
             bool isNewSuggestion = !string.Equals(acceptedText, textboxUserSearch.Text, StringComparison.OrdinalIgnoreCase);
 
-            if (isNewSuggestion || Suggestions.Any())
+            if (isNewSuggestion && Suggestions.Any())
             {
                 listboxSuggestions.ItemsSource = Suggestions;
                 listboxSuggestions.Visibility = Visibility.Visible;
@@ -70,6 +70,9 @@ namespace VDITroubleshooter
         {
             if (listboxSuggestions.SelectedItem != null)
             {
+                textboxUserSearch.IsReadOnly = true;
+                textboxUserSearch.TextChanged -= textboxUserSearch_TextChanged;
+
                 // Stop any threads that generate new suggestions
                 try
                 {
@@ -81,13 +84,11 @@ namespace VDITroubleshooter
 
                 // Accept the suggestion
                 acceptedText = listboxSuggestions.SelectedItem.ToString().Split()[0].ToLower();
-
-                textboxUserSearch.TextChanged -= textboxUserSearch_TextChanged;
+                SuppressRedundantSuggestions_Async(2);
                 textboxUserSearch.Text = acceptedText;
-                textboxUserSearch.TextChanged += textboxUserSearch_TextChanged;
 
-                // Hold off on more suggestions for a couple seconds (for the current string)
-                SuppressRedundantSuggestions_Async();
+                textboxUserSearch.TextChanged += textboxUserSearch_TextChanged;
+                textboxUserSearch.IsReadOnly = false;
             }
 
             HideUserSuggestions();

@@ -328,7 +328,6 @@ namespace VDITroubleshooter
 
         private void listboxVirtualDesktops_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
     }
 }

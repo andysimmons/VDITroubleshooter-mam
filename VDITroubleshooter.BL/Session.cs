@@ -9,6 +9,8 @@ namespace VDITroubleshooter.BL
 {
     public class Session
     {
+        public string AdminAddress { get; set; }
+
         public Version AgentVersion { get; set; }
 
         public string CatalogName { get; set; }
@@ -57,6 +59,16 @@ namespace VDITroubleshooter.BL
 
         public bool InMaintenanceMode { get; set; }
 
+        public bool IsExternal { get; set; }
+
+        public bool IsInternal
+        {
+            get
+            {
+                return !IsExternal; 
+            }
+        }
+
         public bool IsPhysical { get; set; }
 
         public string LaunchedViaHostname { get; set; }
@@ -93,6 +105,8 @@ namespace VDITroubleshooter.BL
 
         public string SessionType { get; set; }
 
+        public string SiteName { get; set; }
+
         public DateTime StartTime { get; set; }
 
         public int Uid { get; set; }
@@ -104,5 +118,38 @@ namespace VDITroubleshooter.BL
         public Guid UserSID { get; set; }
 
         public string UserUPN { get; set; }
+
+        public TimeSpan? TimeInState
+        {
+            get
+            {
+                TimeSpan? ts = null;
+
+                if (SessionStateChangeTime != null && SessionStateChangeTime != DateTime.MinValue)
+                {
+                    DateTime now = DateTime.Now;
+                    ts = now - SessionStateChangeTime;
+                }
+
+                return ts;
+            }
+        }
+
+        public string FormattedTimeInState
+        {
+            get
+            {
+                string result = "";
+
+                if (TimeInState.HasValue)
+                {
+                    var ts = (TimeSpan)TimeInState;
+                    result = string.Format("{0:%d} day(s), {0:hh\\:mm\\:ss}", ts);
+                }
+
+                return result;
+            }
+        }
+
     }
 }

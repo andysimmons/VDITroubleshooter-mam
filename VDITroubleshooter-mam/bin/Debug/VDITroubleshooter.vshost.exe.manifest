@@ -433,26 +433,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VDITroubleshooter.exe" size="3047336">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VDITroubleshooter.exe" size="3047848">
       <assemblyIdentity name="VDITroubleshooter" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Wuax3yxBb1MIe/Ym56XB5f72ahKcU6cy1MaHRw5Vn9k=</dsig:DigestValue>
+        <dsig:DigestValue>cfpPRLYYLtabetKLe6xvzJOZoL1L7lMCJ6Vr6/ykNIo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VDITroubleshooter.BL.dll" size="23040">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VDITroubleshooter.BL.dll" size="20992">
       <assemblyIdentity name="VDITroubleshooter.BL" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>zjAfVZ57vyLcllcOmKRVHvRKtoJGAoe+pmhHAKBfGjA=</dsig:DigestValue>
+        <dsig:DigestValue>bF3TGQ5UlEjeZn1kfHb2Ya4JQWI03SMlt1kHMWVJHfA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -498,8 +498,8 @@
 
                                     <!-- Placeholder items -->
                                     <!--<local:VirtualDesktop HostedMachineName="XDBP07GCD00193" SessionState="Active" DesktopGroupName="TV Clinician Desktop"/>
-                                    <local:VirtualDesktop HostedMachineName="V02-PD-00036" SessionState="Disconnected" DesktopGroupName="Windows 7 Personal Desktop"/>
-                                    <local:VirtualDesktop HostedMachineName="XDTP07GCD00124" SessionState="Available" DesktopGroupName="MV Clinician Desktop"/>-->
+                                         <local:VirtualDesktop HostedMachineName="V02-PD-00036" SessionState="Disconnected" DesktopGroupName="Windows 7 Personal Desktop"/>
+                                         <local:VirtualDesktop HostedMachineName="XDTP07GCD00124" SessionState="Available" DesktopGroupName="MV Clinician Desktop"/>-->
 
 
 
@@ -509,7 +509,7 @@
                             </materialDesign:Card>
                             <Grid Name="gridSessionDetails">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="178*" />
+                                    <ColumnDefinition Width="110*" />
                                     <ColumnDefinition Width="21*" />
                                     <ColumnDefinition Width="157*"/>
                                 </Grid.ColumnDefinitions>
@@ -562,28 +562,34 @@
                                 <Label Name="labelSessionStateResult"
                                        Style="{StaticResource PropertyValue}"
                                        Grid.Row="0" Grid.ColumnSpan="2"
-                                       Content="{Binding ElementName=listboxVirtualDesktops, Path=SelectedItem.SessionState}"></Label>
+                                       Content="{Binding ElementName=listboxVirtualDesktops, Path=SelectedItem.SessionState}"/>
                                 <Label Name="labelTimeInStateResult" 
                                        Style="{StaticResource PropertyValue}"
-                                       Grid.Row="1" Grid.ColumnSpan="2">Time in State Result</Label>
+                                       Grid.Row="1" Grid.ColumnSpan="2"
+                                       Content="{Binding ElementName=listboxVirtualDesktops, Path=SelectedItem.FormattedTimeInState}"/>
                                 <Label Name="labelDeliveryGroupResult" 
                                        Style="{StaticResource PropertyValue}"
-                                       Grid.Row="2" Grid.ColumnSpan="2">Delivery Group Result</Label>
+                                       Grid.Row="2" Grid.ColumnSpan="2"
+                                       Content="{Binding ElementName=listboxVirtualDesktops, Path=SelectedItem.DesktopGroupName}"/>
                                 <Label Name="labelDesktopTypeResult" 
                                        Style="{StaticResource PropertyValue}"
-                                       Grid.Row="3" Grid.ColumnSpan="2">Desktop Type Result</Label>
+                                       Grid.Row="3" Grid.ColumnSpan="2"
+                                       Content="{Binding ElementName=listboxVirtualDesktops, Path=SelectedItem.DesktopKind}"/>
                                 <Label Name="labelRegistrationStateResult" 
                                        Style="{StaticResource PropertyValue}"
-                                       Grid.Row="4" Grid.ColumnSpan="2">Registration State Result</Label>
+                                       Grid.Row="4" Grid.ColumnSpan="2"
+                                       Content="Registration State Result"/>
                                 <Label Name="labelVmInternalStateResult" 
                                        Style="{StaticResource PropertyValue}"
                                        Grid.Row="5" Grid.ColumnSpan="2">VM Internal State Result</Label>
                                 <Label Name="labelSiteResult"
                                        Style="{StaticResource PropertyValue}"
-                                       Grid.Row="6" Grid.ColumnSpan="2">Site Result</Label>
+                                       Grid.Row="6" Grid.ColumnSpan="2"
+                                       Content="{Binding ElementName=listboxVirtualDesktops, Path=SelectedItem.SiteName}"/>
                                 <Label Name="labelDDCResult"
                                        Style="{StaticResource PropertyValue}"
-                                       Grid.Row="7" Grid.ColumnSpan="2">DDC Result</Label>
+                                       Grid.Row="7" Grid.ColumnSpan="2"
+                                       Content="{Binding ElementName=listboxVirtualDesktops, Path=SelectedItem.AdminAddress}"/>
                                 <Label Name="labelFaultStateResult"
                                        Style="{StaticResource PropertyValue}"
                                        Grid.Row="8" Grid.ColumnSpan="2">Fault State Result</Label>
@@ -623,7 +629,7 @@
                                    Grid.Row="0"
                                    Style="{StaticResource LeftPropertyName}"/>
                             <Label Name="labelEndpointNameResult"
-                                   Content="Endpoint Name Result"
+                                   Content="{Binding ElementName=listboxVirtualDesktops, Path=SelectedItem.ClientName}"
                                    Grid.Row="0"
                                    Style="{StaticResource PropertyValue}"/>
                             
@@ -632,19 +638,27 @@
                                    Grid.Row="1"
                                    Style="{StaticResource LeftPropertyName}"/>
                             <Label Name="labelEndpointLastKnownIPResult"
-                                   Content="123.45.67.89"
+                                   Content="{Binding ElementName=listboxVirtualDesktops, Path=SelectedItem.ClientAddress}"
                                    Grid.Row="1"
                                    Style="{StaticResource PropertyValue}"/>
                             <RadioButton Name="radioInternal"
                                          Content="Internal"
                                          Grid.Row="2"
                                          Grid.Column="0"
-                                         Margin="4"/>
+                                         Margin="4"
+                                         IsChecked="{Binding ElementName=listboxVirtualDesktops, 
+                                            Path=SelectedItem.IsInternal, 
+                                            Mode=OneWay}"
+                                         IsEnabled="{Binding ElementName=radioInternal, Path=IsChecked}"/>
                             <RadioButton Name="radioExternal"
                                          Content="External"
                                          Grid.Row="2"
                                          Grid.Column="1"
-                                         Margin="4"/>
+                                         Margin="4"
+                                         IsChecked="{Binding ElementName=listboxVirtualDesktops, 
+                                            Path=SelectedItem.IsExternal, 
+                                            Mode=OneWay}"
+                                         IsEnabled="{Binding ElementName=radioExternal, Path=IsChecked}"/>
 
                         </Grid>
                         

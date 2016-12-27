@@ -25,6 +25,8 @@ namespace VDITroubleshooter
             PreviewKeyDown += new KeyEventHandler(HandleEsc);
         }
 
+        private string userPrefix = "SL1\\";
+
         private CancellationTokenSource ctsGetSuggestions;
 
         private CancellationTokenSource ctsSuppressor;
@@ -145,8 +147,13 @@ namespace VDITroubleshooter
         private void GetUserData()
         {
             // TODO
-            List<VirtualDesktop> vdiPlaceholders = VirtualDesktop.GetPlaceholders();
-            listboxVirtualDesktops.ItemsSource = vdiPlaceholders;
+            //List<VirtualDesktop> vdiPlaceholders = VirtualDesktop.GetPlaceholders();
+            //listboxVirtualDesktops.ItemsSource = vdiPlaceholders;
+
+            var adminAddresses = new string[] { "ctxddc01", "sltctxddc01" };
+
+            List<Session> vdiSessions = XDSearcher.GetSessions(adminAddresses, $"{userPrefix}{textboxUserSearch.Text}");
+            listboxVirtualDesktops.ItemsSource = vdiSessions;
         }
 
         /// <summary>
@@ -317,6 +324,11 @@ namespace VDITroubleshooter
         {
             HideUserSuggestions();
             GetUserData();
+        }
+
+        private void listboxVirtualDesktops_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

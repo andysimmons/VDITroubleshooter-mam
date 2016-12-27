@@ -465,7 +465,7 @@
                                 <ListBox Name="listboxVirtualDesktops"
                                          Height="100"
                                          Width="330"
-                                         HorizontalContentAlignment="Stretch">
+                                         HorizontalContentAlignment="Stretch" SelectionChanged="listboxVirtualDesktops_SelectionChanged">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <Grid>
@@ -561,7 +561,8 @@
                                 <!-- Column 1 -->
                                 <Label Name="labelSessionStateResult"
                                        Style="{StaticResource PropertyValue}"
-                                       Grid.Row="0" Grid.ColumnSpan="2">Session State Result</Label>
+                                       Grid.Row="0" Grid.ColumnSpan="2"
+                                       Content="{Binding ElementName=listboxVirtualDesktops, Path=SelectedItem.SessionState}"></Label>
                                 <Label Name="labelTimeInStateResult" 
                                        Style="{StaticResource PropertyValue}"
                                        Grid.Row="1" Grid.ColumnSpan="2">Time in State Result</Label>

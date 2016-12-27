@@ -7,7 +7,7 @@ using System.Net;
 
 namespace VDITroubleshooter.BL
 {
-    class Session
+    public class Session
     {
         public Version AgentVersion { get; set; }
 
@@ -29,7 +29,7 @@ namespace VDITroubleshooter.BL
 
         public string DesktopGroupName { get; set; }
 
-        public int DestkopGroupUid { get; set; }
+        public int DesktopGroupUid { get; set; }
 
         public string DesktopKind { get; set; }
 
@@ -104,7 +104,5 @@ namespace VDITroubleshooter.BL
         public Guid UserSID { get; set; }
 
         public string UserUPN { get; set; }
-
-
     }
 }

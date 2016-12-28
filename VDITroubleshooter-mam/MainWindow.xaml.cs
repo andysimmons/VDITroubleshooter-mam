@@ -152,7 +152,7 @@ namespace VDITroubleshooter
 
             var adminAddresses = new string[] { "ctxddc01", "sltctxddc01" };
 
-            List<Session> vdiSessions = XDSearcher.GetSessions(adminAddresses, $"{userPrefix}{textboxUserSearch.Text}");
+            List<XDSession> vdiSessions = XDSearcher.GetSessions(adminAddresses, $"{userPrefix}{textboxUserSearch.Text}");
             listboxVirtualDesktops.ItemsSource = vdiSessions;
         }
 

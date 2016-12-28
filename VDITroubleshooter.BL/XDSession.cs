@@ -7,7 +7,7 @@ using System.Net;
 
 namespace VDITroubleshooter.BL
 {
-    public class Session
+    public class XDSession
     {
         public string AdminAddress { get; set; }
 

@@ -15,16 +15,16 @@ namespace VDITroubleshooter.BL
 {
     public static class XDSearcher
     {
-        public static List<Session> GetSessions(string[] AdminAddresses, string UserName)
+        public static List<XDSession> GetSessions(string[] AdminAddress, string UserName)
         {
-            var sessions = new List<Session>();
+            var sessions = new List<XDSession>();
 
             Runspace runSpace = RunspaceFactory.CreateRunspace();
             runSpace.Open();
             PSSnapInException psex;
             runSpace.RunspaceConfiguration.AddPSSnapIn("Citrix.Broker.Admin.V2", out psex);
 
-            foreach (string adminAddress in AdminAddresses)
+            foreach (string adminAddress in AdminAddress)
             {
                 var getSession = new Command("Get-BrokerSession");
                 getSession.Parameters.Add("AdminAddress", adminAddress);
@@ -38,20 +38,20 @@ namespace VDITroubleshooter.BL
 
                     new Hashtable()
                     {
-                        { "Name", "SiteName" },
-                        { "Expression", ScriptBlock.Create($"(Get-BrokerSite -AdminAddress {adminAddress}).Name") }
+                        ["Name"]       = "SiteName",
+                        ["Expression"] = ScriptBlock.Create($"(Get-BrokerSite -AdminAddress {adminAddress}).Name")
                     },
 
                     new Hashtable()
                     {
-                        { "Name", "AdminAddress" },
-                        { "Expression", ScriptBlock.Create($"'{adminAddress}'") }
+                        [ "Name"]        = "AdminAddress" ,
+                        [ "Expression"]  = ScriptBlock.Create($"'{adminAddress.ToUpper()}'")
                     },
 
                     new Hashtable()
                     {
-                        { "Name", "IsExternal" },
-                        { "Expression", ScriptBlock.Create("[bool]$_.SmartAccessTags.Count") }
+                        [ "Name"]       = "IsExternal" ,
+                        [ "Expression"] = ScriptBlock.Create("[bool]$_.SmartAccessTags.Count")
                     }
                 };
                 selectObject.Parameters.Add("Property", selectProps);
@@ -82,11 +82,11 @@ namespace VDITroubleshooter.BL
         /// <param name="PSObject"></param>
         /// <returns></returns>
         // See if you can make this dynamic later... just trying to figure out the basics first.
-        private static Session PSObjectToSession(PSObject PSObject)
+        private static XDSession PSObjectToSession(PSObject PSObject)
         {
-            var session = new Session();
+            var session = new XDSession();
 
-            Type sessionType = typeof(Session);
+            Type sessionType = typeof(XDSession);
 
             var properties = new Dictionary<string, object>();
             foreach (PropertyInfo prop in sessionType.GetProperties())

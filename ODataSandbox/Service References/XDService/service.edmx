@@ -1,0 +1,576 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices m:DataServiceVersion="1.0" m:MaxDataServiceVersion="3.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Schema Namespace="Citrix.Monitor.Repository" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityType Name="ApplicationInstanceSummary">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="SummaryDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ApplicationId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="DesktopGroupId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="PeakConcurrentInstanceCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TotalUsageDuration" Type="Edm.Double" Nullable="false" />
+        <Property Name="TotalLaunchesCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="StartingInstanceCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Granularity" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Application" Relationship="Citrix.Monitor.Repository.ApplicationInstanceSummary_Application" ToRole="Application" FromRole="ApplicationInstanceSummary" />
+        <NavigationProperty Name="DesktopGroup" Relationship="Citrix.Monitor.Repository.ApplicationInstanceSummary_DesktopGroup" ToRole="DesktopGroup" FromRole="ApplicationInstanceSummary" />
+      </EntityType>
+      <EntityType Name="Application">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="PublishedName" Type="Edm.String" />
+        <Property Name="ApplicationType" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Enabled" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="AdminFolder" Type="Edm.String" />
+        <Property Name="LifecycleState" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="ApplicationInstances" Relationship="Citrix.Monitor.Repository.Application_ApplicationInstances_ApplicationInstance_Application" ToRole="ApplicationInstance_Application" FromRole="Application_ApplicationInstances" />
+        <NavigationProperty Name="DesktopGroups" Relationship="Citrix.Monitor.Repository.Application_DesktopGroups_DesktopGroup_Applications" ToRole="DesktopGroup_Applications" FromRole="Application_DesktopGroups" />
+      </EntityType>
+      <EntityType Name="ApplicationInstance">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="ApplicationId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="SessionKey" Type="Edm.Guid" Nullable="false" />
+        <Property Name="StartDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="EndDate" Type="Edm.DateTime" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Application" Relationship="Citrix.Monitor.Repository.Application_ApplicationInstances_ApplicationInstance_Application" ToRole="Application_ApplicationInstances" FromRole="ApplicationInstance_Application" />
+        <NavigationProperty Name="Session" Relationship="Citrix.Monitor.Repository.ApplicationInstance_Session_Session_ApplicationInstances" ToRole="Session_ApplicationInstances" FromRole="ApplicationInstance_Session" />
+      </EntityType>
+      <EntityType Name="Session">
+        <Key>
+          <PropertyRef Name="SessionKey" />
+        </Key>
+        <Property Name="SessionKey" Type="Edm.Guid" Nullable="false" />
+        <Property Name="StartDate" Type="Edm.DateTime" />
+        <Property Name="LogOnDuration" Type="Edm.Int32" />
+        <Property Name="EndDate" Type="Edm.DateTime" />
+        <Property Name="ExitCode" Type="Edm.Int32" Nullable="false" />
+        <Property Name="FailureDate" Type="Edm.DateTime" />
+        <Property Name="ConnectionState" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ConnectionStateChangeDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="LifecycleState" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CurrentConnectionId" Type="Edm.Int64" />
+        <Property Name="UserId" Type="Edm.Int64" />
+        <Property Name="MachineId" Type="Edm.Guid" />
+        <Property Name="SessionType" Type="Edm.Int32" Nullable="false" />
+        <Property Name="IsAnonymous" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="ApplicationInstances" Relationship="Citrix.Monitor.Repository.ApplicationInstance_Session_Session_ApplicationInstances" ToRole="ApplicationInstance_Session" FromRole="Session_ApplicationInstances" />
+        <NavigationProperty Name="Connections" Relationship="Citrix.Monitor.Repository.Session_Connections_Connection_Session" ToRole="Connection_Session" FromRole="Session_Connections" />
+        <NavigationProperty Name="CurrentConnection" Relationship="Citrix.Monitor.Repository.Session_CurrentConnection" ToRole="CurrentConnection" FromRole="Session" />
+        <NavigationProperty Name="Failure" Relationship="Citrix.Monitor.Repository.Session_Failure" ToRole="Failure" FromRole="Session" />
+        <NavigationProperty Name="Machine" Relationship="Citrix.Monitor.Repository.Session_Machine_Machine_Sessions" ToRole="Machine_Sessions" FromRole="Session_Machine" />
+        <NavigationProperty Name="User" Relationship="Citrix.Monitor.Repository.Session_User_User_Sessions" ToRole="User_Sessions" FromRole="Session_User" />
+      </EntityType>
+      <EntityType Name="Connection">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="ClientName" Type="Edm.String" />
+        <Property Name="ClientAddress" Type="Edm.String" />
+        <Property Name="ClientVersion" Type="Edm.String" />
+        <Property Name="ConnectedViaHostName" Type="Edm.String" />
+        <Property Name="ConnectedViaIPAddress" Type="Edm.String" />
+        <Property Name="LaunchedViaHostName" Type="Edm.String" />
+        <Property Name="LaunchedViaIPAddress" Type="Edm.String" />
+        <Property Name="IsReconnect" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="IsSecureIca" Type="Edm.Boolean" />
+        <Property Name="Protocol" Type="Edm.String" />
+        <Property Name="LogOnStartDate" Type="Edm.DateTime" />
+        <Property Name="LogOnEndDate" Type="Edm.DateTime" />
+        <Property Name="BrokeringDuration" Type="Edm.Int64" />
+        <Property Name="BrokeringDate" Type="Edm.DateTime" />
+        <Property Name="DisconnectCode" Type="Edm.Int64" />
+        <Property Name="DisconnectDate" Type="Edm.DateTime" />
+        <Property Name="VMStartStartDate" Type="Edm.DateTime" />
+        <Property Name="VMStartEndDate" Type="Edm.DateTime" />
+        <Property Name="ClientSessionValidateDate" Type="Edm.DateTime" />
+        <Property Name="ServerSessionValidateDate" Type="Edm.DateTime" />
+        <Property Name="EstablishmentDate" Type="Edm.DateTime" />
+        <Property Name="HdxStartDate" Type="Edm.DateTime" />
+        <Property Name="HdxEndDate" Type="Edm.DateTime" />
+        <Property Name="AuthenticationDuration" Type="Edm.Int32" />
+        <Property Name="GpoStartDate" Type="Edm.DateTime" />
+        <Property Name="GpoEndDate" Type="Edm.DateTime" />
+        <Property Name="LogOnScriptsStartDate" Type="Edm.DateTime" />
+        <Property Name="LogOnScriptsEndDate" Type="Edm.DateTime" />
+        <Property Name="ProfileLoadStartDate" Type="Edm.DateTime" />
+        <Property Name="ProfileLoadEndDate" Type="Edm.DateTime" />
+        <Property Name="InteractiveStartDate" Type="Edm.DateTime" />
+        <Property Name="InteractiveEndDate" Type="Edm.DateTime" />
+        <Property Name="SessionKey" Type="Edm.Guid" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Session" Relationship="Citrix.Monitor.Repository.Session_Connections_Connection_Session" ToRole="Session_Connections" FromRole="Connection_Session" />
+      </EntityType>
+      <EntityType Name="ConnectionFailureCategory">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="ConnectionFailureEnumValue" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Category" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+      </EntityType>
+      <EntityType Name="Machine">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="Sid" Type="Edm.String" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="DnsName" Type="Edm.String" />
+        <Property Name="LifecycleState" Type="Edm.Int32" Nullable="false" />
+        <Property Name="IPAddress" Type="Edm.String" />
+        <Property Name="HostedMachineId" Type="Edm.String" />
+        <Property Name="HostingServerName" Type="Edm.String" />
+        <Property Name="HostedMachineName" Type="Edm.String" />
+        <Property Name="IsAssigned" Type="Edm.Boolean" />
+        <Property Name="IsInMaintenanceMode" Type="Edm.Boolean" />
+        <Property Name="IsPendingUpdate" Type="Edm.Boolean" />
+        <Property Name="AgentVersion" Type="Edm.String" />
+        <Property Name="AssociatedUserFullNames" Type="Edm.String" />
+        <Property Name="AssociatedUserNames" Type="Edm.String" />
+        <Property Name="AssociatedUserUPNs" Type="Edm.String" />
+        <Property Name="CurrentRegistrationState" Type="Edm.Int32" Nullable="false" />
+        <Property Name="RegistrationStateChangeDate" Type="Edm.DateTime" />
+        <Property Name="LastDeregisteredCode" Type="Edm.Int32" Nullable="false" />
+        <Property Name="LastDeregisteredDate" Type="Edm.DateTime" />
+        <Property Name="CurrentPowerState" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CurrentSessionCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ControllerDnsName" Type="Edm.String" />
+        <Property Name="PoweredOnDate" Type="Edm.DateTime" />
+        <Property Name="PowerStateChangeDate" Type="Edm.DateTime" />
+        <Property Name="FunctionalLevel" Type="Edm.Int32" Nullable="false" />
+        <Property Name="FailureDate" Type="Edm.DateTime" />
+        <Property Name="WindowsConnectionSetting" Type="Edm.Int32" Nullable="false" />
+        <Property Name="IsPreparing" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="FaultState" Type="Edm.Int32" Nullable="false" />
+        <Property Name="OSType" Type="Edm.String" />
+        <Property Name="CurrentLoadIndexId" Type="Edm.Int64" />
+        <Property Name="CatalogId" Type="Edm.Guid" />
+        <Property Name="DesktopGroupId" Type="Edm.Guid" />
+        <Property Name="HypervisorId" Type="Edm.Guid" />
+        <Property Name="Hash" Type="Edm.String" />
+        <Property Name="MachineRole" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Catalog" Relationship="Citrix.Monitor.Repository.Machine_Catalog_Catalog_Machines" ToRole="Catalog_Machines" FromRole="Machine_Catalog" />
+        <NavigationProperty Name="CurrentLoadIndex" Relationship="Citrix.Monitor.Repository.Machine_CurrentLoadIndex" ToRole="CurrentLoadIndex" FromRole="Machine" />
+        <NavigationProperty Name="DesktopGroup" Relationship="Citrix.Monitor.Repository.Machine_DesktopGroup_DesktopGroup_Machines" ToRole="DesktopGroup_Machines" FromRole="Machine_DesktopGroup" />
+        <NavigationProperty Name="Hypervisor" Relationship="Citrix.Monitor.Repository.Machine_Hypervisor_Hypervisor_Machines" ToRole="Hypervisor_Machines" FromRole="Machine_Hypervisor" />
+        <NavigationProperty Name="LoadIndex" Relationship="Citrix.Monitor.Repository.Machine_LoadIndex_LoadIndex_Machine" ToRole="LoadIndex_Machine" FromRole="Machine_LoadIndex" />
+        <NavigationProperty Name="MachineFailures" Relationship="Citrix.Monitor.Repository.Machine_MachineFailures_MachineFailureLog_Machine" ToRole="MachineFailureLog_Machine" FromRole="Machine_MachineFailures" />
+        <NavigationProperty Name="MachineHotfixLogs" Relationship="Citrix.Monitor.Repository.Machine_MachineHotfixLogs_MachineHotfixLog_Machine" ToRole="MachineHotfixLog_Machine" FromRole="Machine_MachineHotfixLogs" />
+        <NavigationProperty Name="Sessions" Relationship="Citrix.Monitor.Repository.Session_Machine_Machine_Sessions" ToRole="Session_Machine" FromRole="Machine_Sessions" />
+      </EntityType>
+      <EntityType Name="Catalog">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="LifecycleState" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ProvisioningType" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PersistentUserChanges" Type="Edm.Int32" Nullable="false" />
+        <Property Name="IsMachinePhysical" Type="Edm.Boolean" />
+        <Property Name="AllocationType" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SessionSupport" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ProvisioningSchemeId" Type="Edm.Guid" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Machines" Relationship="Citrix.Monitor.Repository.Machine_Catalog_Catalog_Machines" ToRole="Machine_Catalog" FromRole="Catalog_Machines" />
+      </EntityType>
+      <EntityType Name="LoadIndex">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="EffectiveLoadIndex" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Cpu" Type="Edm.Int32" />
+        <Property Name="Memory" Type="Edm.Int32" />
+        <Property Name="Disk" Type="Edm.Int32" />
+        <Property Name="Network" Type="Edm.Int32" />
+        <Property Name="SessionCount" Type="Edm.Int32" />
+        <Property Name="MachineId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Machine" Relationship="Citrix.Monitor.Repository.Machine_LoadIndex_LoadIndex_Machine" ToRole="Machine_LoadIndex" FromRole="LoadIndex_Machine" />
+      </EntityType>
+      <EntityType Name="DesktopGroup">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="IsRemotePC" Type="Edm.Boolean" />
+        <Property Name="DesktopKind" Type="Edm.Int32" Nullable="false" />
+        <Property Name="LifecycleState" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SessionSupport" Type="Edm.Int32" Nullable="false" />
+        <Property Name="DeliveryType" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Applications" Relationship="Citrix.Monitor.Repository.Application_DesktopGroups_DesktopGroup_Applications" ToRole="Application_DesktopGroups" FromRole="DesktopGroup_Applications" />
+        <NavigationProperty Name="Machines" Relationship="Citrix.Monitor.Repository.Machine_DesktopGroup_DesktopGroup_Machines" ToRole="Machine_DesktopGroup" FromRole="DesktopGroup_Machines" />
+      </EntityType>
+      <EntityType Name="Hypervisor">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="LifecycleState" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Machines" Relationship="Citrix.Monitor.Repository.Machine_Hypervisor_Hypervisor_Machines" ToRole="Machine_Hypervisor" FromRole="Hypervisor_Machines" />
+      </EntityType>
+      <EntityType Name="MachineFailureLog">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="MachineId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="FailureStartDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="FailureEndDate" Type="Edm.DateTime" />
+        <Property Name="FaultState" Type="Edm.Int32" Nullable="false" />
+        <Property Name="LastDeregisteredCode" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Machine" Relationship="Citrix.Monitor.Repository.Machine_MachineFailures_MachineFailureLog_Machine" ToRole="Machine_MachineFailures" FromRole="MachineFailureLog_Machine" />
+      </EntityType>
+      <EntityType Name="MachineHotfixLog">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="MachineId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="HotfixId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="ChangeType" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CurrentState" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Hotfix" Relationship="Citrix.Monitor.Repository.MachineHotfixLog_Hotfix_Hotfix_MachineHotfixLogs" ToRole="Hotfix_MachineHotfixLogs" FromRole="MachineHotfixLog_Hotfix" />
+        <NavigationProperty Name="Machine" Relationship="Citrix.Monitor.Repository.Machine_MachineHotfixLogs_MachineHotfixLog_Machine" ToRole="Machine_MachineHotfixLogs" FromRole="MachineHotfixLog_Machine" />
+      </EntityType>
+      <EntityType Name="Hotfix">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="Article" Type="Edm.String" />
+        <Property Name="ArticleName" Type="Edm.String" />
+        <Property Name="FileName" Type="Edm.String" />
+        <Property Name="FileFormat" Type="Edm.String" />
+        <Property Name="Version" Type="Edm.String" />
+        <Property Name="ComponentName" Type="Edm.String" />
+        <Property Name="ComponentVersion" Type="Edm.String" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="MachineHotfixLogs" Relationship="Citrix.Monitor.Repository.MachineHotfixLog_Hotfix_Hotfix_MachineHotfixLogs" ToRole="MachineHotfixLog_Hotfix" FromRole="Hotfix_MachineHotfixLogs" />
+      </EntityType>
+      <EntityType Name="User">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="Sid" Type="Edm.String" />
+        <Property Name="Upn" Type="Edm.String" />
+        <Property Name="UserName" Type="Edm.String" />
+        <Property Name="FullName" Type="Edm.String" />
+        <Property Name="Domain" Type="Edm.String" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Sessions" Relationship="Citrix.Monitor.Repository.Session_User_User_Sessions" ToRole="Session_User" FromRole="User_Sessions" />
+      </EntityType>
+      <EntityType Name="ConnectionFailureLog">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="SessionKey" Type="Edm.Guid" Nullable="false" />
+        <Property Name="FailureDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ConnectionFailureEnumValue" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Session" Relationship="Citrix.Monitor.Repository.ConnectionFailureLog_Session" ToRole="Session" FromRole="ConnectionFailureLog" />
+      </EntityType>
+      <EntityType Name="FailureLogSummary">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="SummaryDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DesktopGroupId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="FailureCategory" Type="Edm.Int32" Nullable="false" />
+        <Property Name="FailureCode" Type="Edm.Int32" Nullable="false" />
+        <Property Name="FailureCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Granularity" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="DesktopGroup" Relationship="Citrix.Monitor.Repository.FailureLogSummary_DesktopGroup" ToRole="DesktopGroup" FromRole="FailureLogSummary" />
+      </EntityType>
+      <EntityType Name="LoadIndexSummary">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="SummaryDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="MachineId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="SumCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SumLoadIndex" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SumCpu" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SumNetwork" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SumDisk" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SumMemory" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SumSessionCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Granularity" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="Machine" Relationship="Citrix.Monitor.Repository.LoadIndexSummary_Machine" ToRole="Machine" FromRole="LoadIndexSummary" />
+      </EntityType>
+      <EntityType Name="SessionActivitySummary">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="SummaryDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DesktopGroupId" Type="Edm.Guid" Nullable="false" />
+        <Property Name="ConnectedSessionCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="DisconnectedSessionCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TotalLogOnDuration" Type="Edm.Double" Nullable="false" />
+        <Property Name="TotalLogOnCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Granularity" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+        <NavigationProperty Name="DesktopGroup" Relationship="Citrix.Monitor.Repository.SessionActivitySummary_DesktopGroup" ToRole="DesktopGroup" FromRole="SessionActivitySummary" />
+      </EntityType>
+      <EntityType Name="TaskLog">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int64" Nullable="false" />
+        <Property Name="RunDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="TaskCategory" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Task" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Result" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ErrorMessage" Type="Edm.String" />
+        <Property Name="CreatedDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="false" />
+      </EntityType>
+      <Association Name="ApplicationInstanceSummary_Application">
+        <End Type="Citrix.Monitor.Repository.ApplicationInstanceSummary" Role="ApplicationInstanceSummary" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.Application" Role="Application" Multiplicity="0..1" />
+      </Association>
+      <Association Name="ApplicationInstanceSummary_DesktopGroup">
+        <End Type="Citrix.Monitor.Repository.DesktopGroup" Role="DesktopGroup" Multiplicity="0..1" />
+        <End Type="Citrix.Monitor.Repository.ApplicationInstanceSummary" Role="ApplicationInstanceSummary" Multiplicity="*" />
+      </Association>
+      <Association Name="Application_ApplicationInstances_ApplicationInstance_Application">
+        <End Type="Citrix.Monitor.Repository.ApplicationInstance" Role="ApplicationInstance_Application" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.Application" Role="Application_ApplicationInstances" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Application_DesktopGroups_DesktopGroup_Applications">
+        <End Type="Citrix.Monitor.Repository.DesktopGroup" Role="DesktopGroup_Applications" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.Application" Role="Application_DesktopGroups" Multiplicity="*" />
+      </Association>
+      <Association Name="ApplicationInstance_Session_Session_ApplicationInstances">
+        <End Type="Citrix.Monitor.Repository.Session" Role="Session_ApplicationInstances" Multiplicity="0..1" />
+        <End Type="Citrix.Monitor.Repository.ApplicationInstance" Role="ApplicationInstance_Session" Multiplicity="*" />
+      </Association>
+      <Association Name="Session_Connections_Connection_Session">
+        <End Type="Citrix.Monitor.Repository.Connection" Role="Connection_Session" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.Session" Role="Session_Connections" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Session_CurrentConnection">
+        <End Type="Citrix.Monitor.Repository.Session" Role="Session" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.Connection" Role="CurrentConnection" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Session_Failure">
+        <End Type="Citrix.Monitor.Repository.Session" Role="Session" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.ConnectionFailureCategory" Role="Failure" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Session_Machine_Machine_Sessions">
+        <End Type="Citrix.Monitor.Repository.Machine" Role="Machine_Sessions" Multiplicity="0..1" />
+        <End Type="Citrix.Monitor.Repository.Session" Role="Session_Machine" Multiplicity="*" />
+      </Association>
+      <Association Name="Session_User_User_Sessions">
+        <End Type="Citrix.Monitor.Repository.User" Role="User_Sessions" Multiplicity="0..1" />
+        <End Type="Citrix.Monitor.Repository.Session" Role="Session_User" Multiplicity="*" />
+      </Association>
+      <Association Name="Machine_Catalog_Catalog_Machines">
+        <End Type="Citrix.Monitor.Repository.Catalog" Role="Catalog_Machines" Multiplicity="0..1" />
+        <End Type="Citrix.Monitor.Repository.Machine" Role="Machine_Catalog" Multiplicity="*" />
+      </Association>
+      <Association Name="Machine_CurrentLoadIndex">
+        <End Type="Citrix.Monitor.Repository.Machine" Role="Machine" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.LoadIndex" Role="CurrentLoadIndex" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Machine_DesktopGroup_DesktopGroup_Machines">
+        <End Type="Citrix.Monitor.Repository.DesktopGroup" Role="DesktopGroup_Machines" Multiplicity="0..1" />
+        <End Type="Citrix.Monitor.Repository.Machine" Role="Machine_DesktopGroup" Multiplicity="*" />
+      </Association>
+      <Association Name="Machine_Hypervisor_Hypervisor_Machines">
+        <End Type="Citrix.Monitor.Repository.Hypervisor" Role="Hypervisor_Machines" Multiplicity="0..1" />
+        <End Type="Citrix.Monitor.Repository.Machine" Role="Machine_Hypervisor" Multiplicity="*" />
+      </Association>
+      <Association Name="Machine_LoadIndex_LoadIndex_Machine">
+        <End Type="Citrix.Monitor.Repository.LoadIndex" Role="LoadIndex_Machine" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.Machine" Role="Machine_LoadIndex" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Machine_MachineFailures_MachineFailureLog_Machine">
+        <End Type="Citrix.Monitor.Repository.MachineFailureLog" Role="MachineFailureLog_Machine" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.Machine" Role="Machine_MachineFailures" Multiplicity="0..1" />
+      </Association>
+      <Association Name="Machine_MachineHotfixLogs_MachineHotfixLog_Machine">
+        <End Type="Citrix.Monitor.Repository.MachineHotfixLog" Role="MachineHotfixLog_Machine" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.Machine" Role="Machine_MachineHotfixLogs" Multiplicity="0..1" />
+      </Association>
+      <Association Name="MachineHotfixLog_Hotfix_Hotfix_MachineHotfixLogs">
+        <End Type="Citrix.Monitor.Repository.Hotfix" Role="Hotfix_MachineHotfixLogs" Multiplicity="0..1" />
+        <End Type="Citrix.Monitor.Repository.MachineHotfixLog" Role="MachineHotfixLog_Hotfix" Multiplicity="*" />
+      </Association>
+      <Association Name="ConnectionFailureLog_Session">
+        <End Type="Citrix.Monitor.Repository.Session" Role="Session" Multiplicity="0..1" />
+        <End Type="Citrix.Monitor.Repository.ConnectionFailureLog" Role="ConnectionFailureLog" Multiplicity="*" />
+      </Association>
+      <Association Name="FailureLogSummary_DesktopGroup">
+        <End Type="Citrix.Monitor.Repository.FailureLogSummary" Role="FailureLogSummary" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.DesktopGroup" Role="DesktopGroup" Multiplicity="0..1" />
+      </Association>
+      <Association Name="LoadIndexSummary_Machine">
+        <End Type="Citrix.Monitor.Repository.Machine" Role="Machine" Multiplicity="0..1" />
+        <End Type="Citrix.Monitor.Repository.LoadIndexSummary" Role="LoadIndexSummary" Multiplicity="*" />
+      </Association>
+      <Association Name="SessionActivitySummary_DesktopGroup">
+        <End Type="Citrix.Monitor.Repository.SessionActivitySummary" Role="SessionActivitySummary" Multiplicity="*" />
+        <End Type="Citrix.Monitor.Repository.DesktopGroup" Role="DesktopGroup" Multiplicity="0..1" />
+      </Association>
+      <EntityContainer Name="DatabaseContext" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="ApplicationActivitySummaries" EntityType="Citrix.Monitor.Repository.ApplicationInstanceSummary" />
+        <EntitySet Name="Applications" EntityType="Citrix.Monitor.Repository.Application" />
+        <EntitySet Name="ApplicationInstances" EntityType="Citrix.Monitor.Repository.ApplicationInstance" />
+        <EntitySet Name="Sessions" EntityType="Citrix.Monitor.Repository.Session" />
+        <EntitySet Name="Connections" EntityType="Citrix.Monitor.Repository.Connection" />
+        <EntitySet Name="ConnectionFailureCategories" EntityType="Citrix.Monitor.Repository.ConnectionFailureCategory" />
+        <EntitySet Name="Machines" EntityType="Citrix.Monitor.Repository.Machine" />
+        <EntitySet Name="Catalogs" EntityType="Citrix.Monitor.Repository.Catalog" />
+        <EntitySet Name="LoadIndexes" EntityType="Citrix.Monitor.Repository.LoadIndex" />
+        <EntitySet Name="DesktopGroups" EntityType="Citrix.Monitor.Repository.DesktopGroup" />
+        <EntitySet Name="Hypervisors" EntityType="Citrix.Monitor.Repository.Hypervisor" />
+        <EntitySet Name="MachineFailureLogs" EntityType="Citrix.Monitor.Repository.MachineFailureLog" />
+        <EntitySet Name="MachineHotfixLogs" EntityType="Citrix.Monitor.Repository.MachineHotfixLog" />
+        <EntitySet Name="Hotfixes" EntityType="Citrix.Monitor.Repository.Hotfix" />
+        <EntitySet Name="Users" EntityType="Citrix.Monitor.Repository.User" />
+        <EntitySet Name="ConnectionFailureLogs" EntityType="Citrix.Monitor.Repository.ConnectionFailureLog" />
+        <EntitySet Name="FailureLogSummaries" EntityType="Citrix.Monitor.Repository.FailureLogSummary" />
+        <EntitySet Name="LoadIndexSummaries" EntityType="Citrix.Monitor.Repository.LoadIndexSummary" />
+        <EntitySet Name="SessionActivitySummaries" EntityType="Citrix.Monitor.Repository.SessionActivitySummary" />
+        <EntitySet Name="TaskLogs" EntityType="Citrix.Monitor.Repository.TaskLog" />
+        <AssociationSet Name="ApplicationInstanceSummary_Application" Association="Citrix.Monitor.Repository.ApplicationInstanceSummary_Application">
+          <End Role="ApplicationInstanceSummary" EntitySet="ApplicationActivitySummaries" />
+          <End Role="Application" EntitySet="Applications" />
+        </AssociationSet>
+        <AssociationSet Name="ApplicationInstanceSummary_DesktopGroup" Association="Citrix.Monitor.Repository.ApplicationInstanceSummary_DesktopGroup">
+          <End Role="ApplicationInstanceSummary" EntitySet="ApplicationActivitySummaries" />
+          <End Role="DesktopGroup" EntitySet="DesktopGroups" />
+        </AssociationSet>
+        <AssociationSet Name="ApplicationInstance_Application" Association="Citrix.Monitor.Repository.Application_ApplicationInstances_ApplicationInstance_Application">
+          <End Role="Application_ApplicationInstances" EntitySet="Applications" />
+          <End Role="ApplicationInstance_Application" EntitySet="ApplicationInstances" />
+        </AssociationSet>
+        <AssociationSet Name="DesktopGroup_Applications" Association="Citrix.Monitor.Repository.Application_DesktopGroups_DesktopGroup_Applications">
+          <End Role="Application_DesktopGroups" EntitySet="Applications" />
+          <End Role="DesktopGroup_Applications" EntitySet="DesktopGroups" />
+        </AssociationSet>
+        <AssociationSet Name="ApplicationInstance_Session" Association="Citrix.Monitor.Repository.ApplicationInstance_Session_Session_ApplicationInstances">
+          <End Role="ApplicationInstance_Session" EntitySet="ApplicationInstances" />
+          <End Role="Session_ApplicationInstances" EntitySet="Sessions" />
+        </AssociationSet>
+        <AssociationSet Name="Connection_Session" Association="Citrix.Monitor.Repository.Session_Connections_Connection_Session">
+          <End Role="Session_Connections" EntitySet="Sessions" />
+          <End Role="Connection_Session" EntitySet="Connections" />
+        </AssociationSet>
+        <AssociationSet Name="Session_CurrentConnection" Association="Citrix.Monitor.Repository.Session_CurrentConnection">
+          <End Role="Session" EntitySet="Sessions" />
+          <End Role="CurrentConnection" EntitySet="Connections" />
+        </AssociationSet>
+        <AssociationSet Name="Session_Failure" Association="Citrix.Monitor.Repository.Session_Failure">
+          <End Role="Session" EntitySet="Sessions" />
+          <End Role="Failure" EntitySet="ConnectionFailureCategories" />
+        </AssociationSet>
+        <AssociationSet Name="Session_Machine" Association="Citrix.Monitor.Repository.Session_Machine_Machine_Sessions">
+          <End Role="Session_Machine" EntitySet="Sessions" />
+          <End Role="Machine_Sessions" EntitySet="Machines" />
+        </AssociationSet>
+        <AssociationSet Name="Session_User" Association="Citrix.Monitor.Repository.Session_User_User_Sessions">
+          <End Role="Session_User" EntitySet="Sessions" />
+          <End Role="User_Sessions" EntitySet="Users" />
+        </AssociationSet>
+        <AssociationSet Name="Machine_Catalog" Association="Citrix.Monitor.Repository.Machine_Catalog_Catalog_Machines">
+          <End Role="Machine_Catalog" EntitySet="Machines" />
+          <End Role="Catalog_Machines" EntitySet="Catalogs" />
+        </AssociationSet>
+        <AssociationSet Name="Machine_CurrentLoadIndex" Association="Citrix.Monitor.Repository.Machine_CurrentLoadIndex">
+          <End Role="Machine" EntitySet="Machines" />
+          <End Role="CurrentLoadIndex" EntitySet="LoadIndexes" />
+        </AssociationSet>
+        <AssociationSet Name="Machine_DesktopGroup" Association="Citrix.Monitor.Repository.Machine_DesktopGroup_DesktopGroup_Machines">
+          <End Role="Machine_DesktopGroup" EntitySet="Machines" />
+          <End Role="DesktopGroup_Machines" EntitySet="DesktopGroups" />
+        </AssociationSet>
+        <AssociationSet Name="Machine_Hypervisor" Association="Citrix.Monitor.Repository.Machine_Hypervisor_Hypervisor_Machines">
+          <End Role="Machine_Hypervisor" EntitySet="Machines" />
+          <End Role="Hypervisor_Machines" EntitySet="Hypervisors" />
+        </AssociationSet>
+        <AssociationSet Name="LoadIndex_Machine" Association="Citrix.Monitor.Repository.Machine_LoadIndex_LoadIndex_Machine">
+          <End Role="Machine_LoadIndex" EntitySet="Machines" />
+          <End Role="LoadIndex_Machine" EntitySet="LoadIndexes" />
+        </AssociationSet>
+        <AssociationSet Name="MachineFailureLog_Machine" Association="Citrix.Monitor.Repository.Machine_MachineFailures_MachineFailureLog_Machine">
+          <End Role="Machine_MachineFailures" EntitySet="Machines" />
+          <End Role="MachineFailureLog_Machine" EntitySet="MachineFailureLogs" />
+        </AssociationSet>
+        <AssociationSet Name="MachineHotfixLog_Machine" Association="Citrix.Monitor.Repository.Machine_MachineHotfixLogs_MachineHotfixLog_Machine">
+          <End Role="Machine_MachineHotfixLogs" EntitySet="Machines" />
+          <End Role="MachineHotfixLog_Machine" EntitySet="MachineHotfixLogs" />
+        </AssociationSet>
+        <AssociationSet Name="MachineHotfixLog_Hotfix" Association="Citrix.Monitor.Repository.MachineHotfixLog_Hotfix_Hotfix_MachineHotfixLogs">
+          <End Role="MachineHotfixLog_Hotfix" EntitySet="MachineHotfixLogs" />
+          <End Role="Hotfix_MachineHotfixLogs" EntitySet="Hotfixes" />
+        </AssociationSet>
+        <AssociationSet Name="ConnectionFailureLog_Session" Association="Citrix.Monitor.Repository.ConnectionFailureLog_Session">
+          <End Role="ConnectionFailureLog" EntitySet="ConnectionFailureLogs" />
+          <End Role="Session" EntitySet="Sessions" />
+        </AssociationSet>
+        <AssociationSet Name="FailureLogSummary_DesktopGroup" Association="Citrix.Monitor.Repository.FailureLogSummary_DesktopGroup">
+          <End Role="FailureLogSummary" EntitySet="FailureLogSummaries" />
+          <End Role="DesktopGroup" EntitySet="DesktopGroups" />
+        </AssociationSet>
+        <AssociationSet Name="LoadIndexSummary_Machine" Association="Citrix.Monitor.Repository.LoadIndexSummary_Machine">
+          <End Role="LoadIndexSummary" EntitySet="LoadIndexSummaries" />
+          <End Role="Machine" EntitySet="Machines" />
+        </AssociationSet>
+        <AssociationSet Name="SessionActivitySummary_DesktopGroup" Association="Citrix.Monitor.Repository.SessionActivitySummary_DesktopGroup">
+          <End Role="SessionActivitySummary" EntitySet="SessionActivitySummaries" />
+          <End Role="DesktopGroup" EntitySet="DesktopGroups" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VDITroubleshooter.BL", "VDI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VDITroubleshooter.BLTest", "VDITroubleshooter.BLTest\VDITroubleshooter.BLTest.csproj", "{4FA4D97A-0FE6-4CA7-A26C-247334BF9E5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataSandbox", "ODataSandbox\ODataSandbox.csproj", "{43EA0F13-DC51-4B7D-9D3B-5D68AFC4856F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4FA4D97A-0FE6-4CA7-A26C-247334BF9E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FA4D97A-0FE6-4CA7-A26C-247334BF9E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FA4D97A-0FE6-4CA7-A26C-247334BF9E5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43EA0F13-DC51-4B7D-9D3B-5D68AFC4856F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43EA0F13-DC51-4B7D-9D3B-5D68AFC4856F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43EA0F13-DC51-4B7D-9D3B-5D68AFC4856F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43EA0F13-DC51-4B7D-9D3B-5D68AFC4856F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

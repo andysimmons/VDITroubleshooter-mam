@@ -351,6 +351,7 @@
                                 <RowDefinition Name="lastBadPasswordAttempt" />
                                 <RowDefinition Name="lastGoodPasswordAttempt" />
                                 <RowDefinition Name="preferredCitrixSite" />
+                                <RowDefinition Name="homeDirPresent" />
                             </Grid.RowDefinitions>
 
                             <!-- Column 0 -->
@@ -384,7 +385,10 @@
                             <Label Name="labelPreferredCitrixSite"
                                    Style="{StaticResource PropertyName}"
                                    Grid.Row="9">Preferred Citrix Site</Label>
-
+                            <Label Name="labelHomeDirPresent"
+                                   Style="{StaticResource PropertyName}"
+                                   Grid.Row="10">Home Directory Present?</Label>
+                            
                             <!-- Column 1 -->
                             <Label Name="labelNameResult"
                                    Style="{StaticResource PropertyValue}"
@@ -416,7 +420,9 @@
                             <Label Name="labelPreferredCitrixSiteResult"
                                    Style="{StaticResource PropertyValue}"
                                    Grid.Row="9">Preferred Citrix Site Result</Label>
-
+                            <Label Name="labelHomeDirPresentResult"
+                                   Style="{StaticResource PropertyValue}"
+                                   Grid.Row="10">Home Dir Present Result</Label>
                         </Grid>
                     </GroupBox>
                     <GroupBox Name="groupboxUserAccountManagement"
@@ -458,7 +464,8 @@
                               Grid.Column="1"
                               Style="{DynamicResource MaterialDesignCardGroupBox}" 
                               Margin="16">
-                        <StackPanel Name="stackpanelSessionDetails">
+                        <StackPanel Name="stackpanelSessionDetails"
+                                    IsEnabled="{Binding ElementName=listboxVirtualDesktops, Path=Items.Count, Mode=OneWay}">
                             <materialDesign:Card Margin="4"
                                                  UniformCornerRadius="2"
                                                  Padding="2">

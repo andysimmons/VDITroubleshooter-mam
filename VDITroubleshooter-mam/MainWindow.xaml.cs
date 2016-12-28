@@ -33,7 +33,14 @@ namespace VDITroubleshooter
 
         private string acceptedText = "";
 
-        
+        // TODO Figure out how to get app-wide settings in a config file (DDCs, group:site mappings, etc) 
+        // TODO Account for offline DDCs/multiple DDCs within a site 
+        public string[] adminAddresses = {
+            "ctxddc01.sl1.stlukes-int.org",
+            "sltctxddc01.sl1.stlukes-int.org"
+        };
+
+
         /// <summary>
         /// Searches AD for an explicit username and returns the result.
         /// </summary>
@@ -149,8 +156,6 @@ namespace VDITroubleshooter
             // TODO
             //List<VirtualDesktop> vdiPlaceholders = VirtualDesktop.GetPlaceholders();
             //listboxVirtualDesktops.ItemsSource = vdiPlaceholders;
-
-            var adminAddresses = new string[] { "ctxddc01", "sltctxddc01" };
 
             List<XDSession> vdiSessions = XDSearcher.GetSessions(adminAddresses, $"{userPrefix}{textboxUserSearch.Text}");
             listboxVirtualDesktops.ItemsSource = vdiSessions;

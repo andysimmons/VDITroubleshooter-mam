@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Services.Client;
+using System.Net;
 
 namespace ODataSandbox
 {
@@ -26,7 +27,7 @@ namespace ODataSandbox
         {
             var uri = new Uri("http://sltctxddc01.sl1.stlukes-int.org/Citrix/Monitor/Odata/v2/Data/");
             var dbContext = new XDService.DatabaseContext(uri);
-            dbContext.Credentials = System.Net.CredentialCache.DefaultNetworkCredentials;
+            dbContext.Credentials = CredentialCache.DefaultNetworkCredentials;
 
             DateTime now = DateTime.Now.ToUniversalTime();
             DateTime lastWeek = now.AddDays(-7).ToUniversalTime();

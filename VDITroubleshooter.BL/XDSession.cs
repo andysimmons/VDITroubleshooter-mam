@@ -125,10 +125,9 @@ namespace VDITroubleshooter.BL
             {
                 TimeSpan? ts = null;
 
-                if (SessionStateChangeTime != null && SessionStateChangeTime != DateTime.MinValue)
+                if (SessionStateChangeTime != DateTime.MinValue)
                 {
-                    DateTime now = DateTime.Now;
-                    ts = now - SessionStateChangeTime;
+                    ts = DateTime.Now - SessionStateChangeTime;
                 }
 
                 return ts;
@@ -150,6 +149,5 @@ namespace VDITroubleshooter.BL
                 return result;
             }
         }
-
     }
 }
